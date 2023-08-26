@@ -23,7 +23,7 @@ public class RandomWord {
             .get()
             .uri(RANDOM_WORD_URL)
             .header("accept", MediaType.APPLICATION_JSON_VALUE)
-            .header("X-Api-Key", "wALx18yAethCLquqwkU38g==ZbmVRxDiwyj5ALql")
+            .header("X-Api-Key", )
             .retrieve();
 
     String response = responseSpec.bodyToMono(String.class).block();
