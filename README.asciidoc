@@ -1,0 +1,7 @@
+== Como se dice jueguito
+
+=== How to play?
+
+You will want to run `ComoSeDiceGUI` which will bring up a GUI in which you will be asked "Como se dice <word>?". "Se dice" button is the "submit" button and the "new word" button will generate a new word if you cannot get the word.
+
+More work to be done. TBD.
