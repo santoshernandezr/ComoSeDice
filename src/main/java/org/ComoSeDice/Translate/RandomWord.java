@@ -3,9 +3,7 @@ package org.ComoSeDice.Translate;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 
@@ -45,6 +43,5 @@ public class RandomWord {
    *
    * @param wordToTranslate the word that will be translated to spanish
    */
-  public void getTranslatedWordWithWebClient(String wordToTranslate) {
-  }
+  public void getTranslatedWordWithWebClient(String wordToTranslate) {}
 }
