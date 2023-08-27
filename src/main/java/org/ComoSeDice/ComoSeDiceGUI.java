@@ -1,16 +1,21 @@
-package org.example;
+package org.ComoSeDice;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * GUI for the Como Se Dice game. It'll get a random word from {@link ComoSeDiceEnum} and ask the
  * user to guess the word in spanish.
  */
+@ComponentScan("org.ComoSeDice")
+@SpringBootApplication
 public class ComoSeDiceGUI extends JFrame implements ActionListener {
-
   private final String COMO_SE_DICE_MESSAGE = "Como se dice %s?";
   private final String WORD_IS_INCORRECT_MESSAGE = "Sorry, asi no se dice. Try again!";
   private final String WORD_IS_CORRECT_MESSAGE = "Si, se dice %s";
@@ -112,7 +117,14 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
   }
 
   public static void main(String[] args) {
-    new ComoSeDiceGUI();
+    ConfigurableApplicationContext ctx =
+        new SpringApplicationBuilder(ComoSeDiceGUI.class).headless(false).run(args);
+
+    EventQueue.invokeLater(
+        () -> {
+          ComoSeDiceGUI ex = ctx.getBean(ComoSeDiceGUI.class);
+          ex.setVisible(true);
+        });
   }
 
   // Here for the sole purpose of pleasing Action Listener.

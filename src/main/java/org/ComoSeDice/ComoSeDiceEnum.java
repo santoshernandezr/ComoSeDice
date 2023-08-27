@@ -1,4 +1,4 @@
-package org.example;
+package org.ComoSeDice;
 
 /** Enum class to store all english to spanish words. */
 public enum ComoSeDiceEnum {
