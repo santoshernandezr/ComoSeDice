@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
-/** This class is to call the api - RANDOM_WORD_URL - using WebClient to get a random word. */
+/**
+ * This class is to call the api - TRANSLATE_WORD_URL - using WebClient to get the translation of a
+ * word.
+ */
 @Component
 public class TranslateWord {
 
