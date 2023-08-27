@@ -19,7 +19,7 @@ public class WebClients {
   public static final String BEAN_NAME_RANDOM_WORD = "randomWordClient";
 
   /**
-   * Name of Spring bean for web client used by {@link RandomWord}
+   * Name of Spring bean for web client used by {@link TranslateWord}
    *
    * <p>Value: <code>translateWordClient</code>
    */
