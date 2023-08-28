@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import org.example.Handlers.ActionListenerHandler;
 
 /**
  * GUI for the Como Se Dice game. It'll get a random word from {@link ComoSeDiceEnum} and ask the
@@ -14,6 +15,8 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
   private final String COMO_SE_DICE_MESSAGE = "Como se dice %s?";
   private final String WORD_IS_INCORRECT_MESSAGE = "Sorry, asi no se dice. Try again!";
   private final String WORD_IS_CORRECT_MESSAGE = "Si, se dice %s";
+  ComoSeDiceEnum englishWord;
+  ActionListenerHandler actionListenerHandler = new ActionListenerHandler();
 
   // JLabels
   JLabel COMO_SE_DICE_LABEL;
@@ -26,8 +29,6 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
   // Buttons
   JButton SUBMIT;
   JButton NEW_WORD;
-
-  ComoSeDiceEnum englishWord;
 
   public ComoSeDiceGUI() {
 
@@ -61,54 +62,21 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
     add(NEW_WORD);
     add(WORD_IS_CORRECT_LABEL);
 
-    this.setUpListeners();
-    SUBMIT.addActionListener(this);
+    // Adding action handlers
+    SUBMIT.addActionListener(
+        actionListenerHandler.submitButton(
+            WORD_IS_INCORRECT_LABEL, WORD_IS_CORRECT_LABEL, GUESS, englishWord));
+    NEW_WORD.addActionListener(
+        actionListenerHandler.newWordButton(
+            COMO_SE_DICE_LABEL,
+            WORD_IS_CORRECT_LABEL,
+            WORD_IS_INCORRECT_LABEL,
+            GUESS,
+            COMO_SE_DICE_MESSAGE,
+            WORD_IS_INCORRECT_MESSAGE));
 
     setSize(300, 300);
     setVisible(true);
-  }
-
-  // Will set up the action each button will do.
-  public void setUpListeners() {
-    /*
-    This action listener is for the "Submit" button. This button will check the guess of the user to see if it is
-    the correct spanish word.
-     */
-    ActionListener submit =
-        e -> {
-          WORD_IS_INCORRECT_LABEL.setVisible(false);
-
-          if (GUESS.getText().equalsIgnoreCase(englishWord.getSpanish())) {
-            WORD_IS_CORRECT_LABEL.setVisible(true);
-          } else {
-            WORD_IS_INCORRECT_LABEL.setVisible(true);
-          }
-        };
-
-    /*
-    This action listener is for the "New word" button.
-    This button will get a new english word from {@link ComoSeDiceEnum} and set it as the new word.
-    After getting the new english word we will update the following labels:
-    COMO_SE_DICE_LABEL: updated to include the new englishWord.
-    WORD_IS_CORRECT_LABEL: updated to include the new CORRECT spanish word.
-    WORD_IS_INCORRECT_LABEL: updated setVisible to false, so the label won't show
-    WORD_IS_CORRECT_LABEL: updated setVisible to false, so the label won't show
-    */
-    ActionListener newWord =
-        e -> {
-          englishWord = ComoSeDiceEnum.getRandom();
-
-          COMO_SE_DICE_LABEL.setText(String.format(COMO_SE_DICE_MESSAGE, englishWord));
-          GUESS.setText("");
-          WORD_IS_CORRECT_LABEL.setText(
-              String.format(WORD_IS_CORRECT_MESSAGE, englishWord.getSpanish()));
-
-          WORD_IS_INCORRECT_LABEL.setVisible(false);
-          WORD_IS_CORRECT_LABEL.setVisible(false);
-        };
-
-    SUBMIT.addActionListener(submit);
-    NEW_WORD.addActionListener(newWord);
   }
 
   public static void main(String[] args) {
