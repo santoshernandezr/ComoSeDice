@@ -1,8 +1,6 @@
 package org.ComoSeDice.Constants;
 
-/**
- * Class that contains constants that will be used throughout the Como se dice game.
- */
+/** Class that contains constants that will be used throughout the Como Se Dice game. */
 public class ComoSeDiceConstants {
   public static final String COMO_SE_DICE_MESSAGE = "Como se dice %s?";
   public static final String WORD_IS_INCORRECT_MESSAGE = "Sorry, asi no se dice. Try again!";

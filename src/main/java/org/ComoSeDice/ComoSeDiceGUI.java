@@ -99,7 +99,7 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
     add(NEW_WORD);
     add(WORD_IS_CORRECT_LABEL);
 
-    // Adding action handlers
+    // Adding action listeners
     SUBMIT.addActionListener(
         this.actionListenerHandler.submitButton(
             WORD_IS_INCORRECT_LABEL,
