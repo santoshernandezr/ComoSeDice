@@ -19,8 +19,8 @@ public class ActionListenerHandler implements ActionListener {
    * This action listener is for the "Submit" button. This button will check the guess of the user
    * to see if it is the correct spanish word.
    *
+   * @param comoSeDiceLabel JLabel that stores the "Como se dice" message.
    * @param incorrectLabel JLabel that stores the "Word is incorrect" message.
-   * @param correctLabel JLabel that stores the "Word is correct" message.
    * @param scoreLabel JLabel that stores the "Score" of the player.
    * @param winnerLabel JLabel that stores the "Ganaste" message.
    * @param ranOutOfLivesLabel JLabel that stores the "Ran out of lives" message.
@@ -29,8 +29,8 @@ public class ActionListenerHandler implements ActionListener {
    * @return ActionListener to be used for the submit button.
    */
   public ActionListener submitButton(
+      JLabel comoSeDiceLabel,
       JLabel incorrectLabel,
-      JLabel correctLabel,
       JLabel scoreLabel,
       JLabel winnerLabel,
       JLabel ranOutOfLivesLabel,
@@ -61,7 +61,6 @@ public class ActionListenerHandler implements ActionListener {
               player.reset();
 
               winnerLabel.setVisible(true);
-              correctLabel.setVisible(false);
 
             }
             /*
@@ -70,8 +69,23 @@ public class ActionListenerHandler implements ActionListener {
              */
             else {
 
+              // Gets a new random word to guess.
+              SinglePlayer.setWordToGuess();
+
+              /*
+              Updates the como se dice LABELs text which contains the como se dice MESSAGE to include the new word to guess.
+              */
+              comoSeDiceLabel.setText(
+                  String.format(
+                      ComoSeDiceConstants.COMO_SE_DICE_MESSAGE, SinglePlayer.wordToGuess));
+
+              // Sets the guess text field to an empty string so the user can guess again.
+              guess.setText("");
+
+              // Setting all the labels setVisible to false since we don't want to show these.
+              incorrectLabel.setVisible(false);
+              ranOutOfLivesLabel.setVisible(false);
               winnerLabel.setVisible(false);
-              correctLabel.setVisible(true);
             }
           }
           /*
@@ -82,8 +96,7 @@ public class ActionListenerHandler implements ActionListener {
             // Removing a life from the player.
             player.removeLife();
 
-            // Since the guess was incorrect, we do not show the correct label or the winner label.
-            correctLabel.setVisible(false);
+            // Since the guess was incorrect, we do not show the winner label.
             winnerLabel.setVisible(false);
 
             /*
@@ -122,13 +135,11 @@ public class ActionListenerHandler implements ActionListener {
    * {@link org.ComoSeDice.ComoSeDiceEnum} and set it as the new word to guess. After getting the
    * new english word we will update the following labels:
    * <li>COMO_SE_DICE_LABEL: updated to include the new englishWord.
-   * <li>WORD_IS_CORRECT_LABEL: updated to include the new CORRECT spanish word.
    * <li>WORD_IS_INCORRECT_LABEL: updated setVisible to false, so the label won't show.
    * <li>WINNER_LABEL: updated setVisible to false, so label won't show.
    * <li>RAN_OUT_OF_LIVES_LABEL: updated setVisible to false, so label won't show.
    *
    * @param comoSeDiceLabel JLabel that stores the "Como se dice" message.
-   * @param correctLabel JLabel that stores the "Word is correct" message.
    * @param incorrectLabel JLabel that stores the "Word is incorrect" message.
    * @param winnerLabel JLabel that stores the "Ganaste" message.
    * @param ranOutOfLivesLabel JLabel that stores the "Ran out of lives" message.
@@ -137,7 +148,6 @@ public class ActionListenerHandler implements ActionListener {
    */
   public ActionListener newWordButton(
       JLabel comoSeDiceLabel,
-      JLabel correctLabel,
       JLabel incorrectLabel,
       JLabel winnerLabel,
       JLabel ranOutOfLivesLabel,
@@ -157,23 +167,15 @@ public class ActionListenerHandler implements ActionListener {
           // Sets the guess text field to an empty string so the user can guess again.
           guess.setText("");
 
-          /*
-          Sets the correct LABEL that contains the word is correct MESSAGE to include the new correct spanish word that
-          is being guessed.
-           */
-          correctLabel.setText(
-              String.format(
-                  ComoSeDiceConstants.WORD_IS_CORRECT_MESSAGE,
-                  SinglePlayer.wordToGuess.getSpanish()));
-
           // Setting all the labels setVisible to false since we don't want to show these.
           incorrectLabel.setVisible(false);
-          correctLabel.setVisible(false);
           winnerLabel.setVisible(false);
           ranOutOfLivesLabel.setVisible(false);
         };
     return newWord;
   }
+
+  public void getNewWord() {}
 
   @Override
   public void actionPerformed(ActionEvent e) {

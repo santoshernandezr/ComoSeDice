@@ -24,8 +24,6 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
   // JLabels
   JLabel COMO_SE_DICE_LABEL;
   // Stores the "Word is correct message". SetVisibility default to false.
-  JLabel WORD_IS_CORRECT_LABEL;
-  // Stores the "Word is incorrect message". SetVisibility default to false.
   JLabel WORD_IS_INCORRECT_LABEL;
   // Stores the "Ran out of lives" label. SetVisibility default to false.
   JLabel RAN_OUT_OF_LIVES_LABEL;
@@ -74,11 +72,6 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
     WINNER_LABEL = new JLabel(ComoSeDiceConstants.WINNER_MESSAGE);
     WINNER_LABEL.setVisible(false);
 
-    WORD_IS_CORRECT_LABEL =
-        new JLabel(
-            String.format(ComoSeDiceConstants.WORD_IS_CORRECT_MESSAGE, SinglePlayer.wordToGuess));
-    WORD_IS_CORRECT_LABEL.setVisible(false);
-
     GUESS = new JTextField(10);
 
     SUBMIT = new JButton("Se dice");
@@ -97,13 +90,12 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
 
     add(SUBMIT);
     add(NEW_WORD);
-    add(WORD_IS_CORRECT_LABEL);
 
     // Adding action listeners
     SUBMIT.addActionListener(
         this.actionListenerHandler.submitButton(
+            COMO_SE_DICE_LABEL,
             WORD_IS_INCORRECT_LABEL,
-            WORD_IS_CORRECT_LABEL,
             SCORE_LABEL,
             WINNER_LABEL,
             RAN_OUT_OF_LIVES_LABEL,
@@ -113,7 +105,6 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
     NEW_WORD.addActionListener(
         this.actionListenerHandler.newWordButton(
             COMO_SE_DICE_LABEL,
-            WORD_IS_CORRECT_LABEL,
             WORD_IS_INCORRECT_LABEL,
             WINNER_LABEL,
             RAN_OUT_OF_LIVES_LABEL,

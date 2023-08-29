@@ -1,5 +1,7 @@
 package org.ComoSeDice.GameModes;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.ComoSeDice.ComoSeDiceEnum;
 
 /**
@@ -15,11 +17,17 @@ public class SinglePlayer {
   // Stores the amount a words a player has to get right in order for them to win.
   public static final int winnerScore = 5;
 
+  public static List<ComoSeDiceEnum> wordsAlreadyUsed = new ArrayList<>();
+
   /**
    * Will get a random word from {@link org.ComoSeDice.ComoSeDiceEnum} and set it to the wordToGuess
    * variable.
    */
   public static void setWordToGuess() {
     wordToGuess = ComoSeDiceEnum.getRandom();
+  }
+
+  public static void resetWords() {
+    wordsAlreadyUsed.clear();
   }
 }
