@@ -65,27 +65,10 @@ public class ActionListenerHandler implements ActionListener {
             }
             /*
             If the player got the word correct but did not reach the winning score, then we will not
-            show the winner label, but we will show the correct label, indicating that the word guessed was correct.
+            show the winner label, get a new word and update the corresponding labels when we get a new word.
              */
             else {
-
-              // Gets a new random word to guess.
-              SinglePlayer.setWordToGuess();
-
-              /*
-              Updates the como se dice LABELs text which contains the como se dice MESSAGE to include the new word to guess.
-              */
-              comoSeDiceLabel.setText(
-                  String.format(
-                      ComoSeDiceConstants.COMO_SE_DICE_MESSAGE, SinglePlayer.wordToGuess));
-
-              // Sets the guess text field to an empty string so the user can guess again.
-              guess.setText("");
-
-              // Setting all the labels setVisible to false since we don't want to show these.
-              incorrectLabel.setVisible(false);
-              ranOutOfLivesLabel.setVisible(false);
-              winnerLabel.setVisible(false);
+              getNewWord(comoSeDiceLabel, incorrectLabel, winnerLabel, ranOutOfLivesLabel, guess);
             }
           }
           /*
@@ -131,13 +114,7 @@ public class ActionListenerHandler implements ActionListener {
   }
 
   /**
-   * This action listener is for the "New word" button. This button will get a new english word from
-   * {@link org.ComoSeDice.ComoSeDiceEnum} and set it as the new word to guess. After getting the
-   * new english word we will update the following labels:
-   * <li>COMO_SE_DICE_LABEL: updated to include the new englishWord.
-   * <li>WORD_IS_INCORRECT_LABEL: updated setVisible to false, so the label won't show.
-   * <li>WINNER_LABEL: updated setVisible to false, so label won't show.
-   * <li>RAN_OUT_OF_LIVES_LABEL: updated setVisible to false, so label won't show.
+   * This action listener is for the "New word" button.
    *
    * @param comoSeDiceLabel JLabel that stores the "Como se dice" message.
    * @param incorrectLabel JLabel that stores the "Word is incorrect" message.
@@ -155,27 +132,49 @@ public class ActionListenerHandler implements ActionListener {
 
     ActionListener newWord =
         e -> {
-          // Gets a new random word to guess.
-          SinglePlayer.setWordToGuess();
-
-          /*
-          Updates the como se dice LABELs text which contains the como se dice MESSAGE to include the new word to guess.
-          */
-          comoSeDiceLabel.setText(
-              String.format(ComoSeDiceConstants.COMO_SE_DICE_MESSAGE, SinglePlayer.wordToGuess));
-
-          // Sets the guess text field to an empty string so the user can guess again.
-          guess.setText("");
-
-          // Setting all the labels setVisible to false since we don't want to show these.
-          incorrectLabel.setVisible(false);
-          winnerLabel.setVisible(false);
-          ranOutOfLivesLabel.setVisible(false);
+          getNewWord(comoSeDiceLabel, incorrectLabel, winnerLabel, ranOutOfLivesLabel, guess);
         };
     return newWord;
   }
 
-  public void getNewWord() {}
+  /**
+   * This method will get a new english word from {@link org.ComoSeDice.ComoSeDiceEnum} and set it
+   * as the new word to guess. After getting the new english word we will update the following
+   * labels:
+   * <li>COMO_SE_DICE_LABEL: updated to include the new englishWord.
+   * <li>WORD_IS_INCORRECT_LABEL: updated setVisible to false, so the label won't show.
+   * <li>WINNER_LABEL: updated setVisible to false, so label won't show.
+   * <li>RAN_OUT_OF_LIVES_LABEL: updated setVisible to false, so label won't show.
+   *
+   * @param comoSeDiceLabel JLabel that stores the "Como se dice" message.
+   * @param incorrectLabel JLabel that stores the "Word is incorrect" message.
+   * @param winnerLabel JLabel that stores the "Ganaste" message.
+   * @param ranOutOfLivesLabel JLabel that stores the "Ran out of lives" message.
+   * @param guess JLabel that has the users guess.
+   */
+  public void getNewWord(
+      JLabel comoSeDiceLabel,
+      JLabel incorrectLabel,
+      JLabel winnerLabel,
+      JLabel ranOutOfLivesLabel,
+      JTextField guess) {
+    // Gets a new random word to guess.
+    SinglePlayer.setWordToGuess();
+
+    /*
+    Updates the como se dice LABELs text which contains the como se dice MESSAGE to include the new word to guess.
+    */
+    comoSeDiceLabel.setText(
+        String.format(ComoSeDiceConstants.COMO_SE_DICE_MESSAGE, SinglePlayer.wordToGuess));
+
+    // Sets the guess text field to an empty string so the user can guess again.
+    guess.setText("");
+
+    // Setting all the labels setVisible to false since we don't want to show these.
+    incorrectLabel.setVisible(false);
+    winnerLabel.setVisible(false);
+    ranOutOfLivesLabel.setVisible(false);
+  }
 
   @Override
   public void actionPerformed(ActionEvent e) {
