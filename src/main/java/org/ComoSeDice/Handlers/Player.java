@@ -1,4 +1,4 @@
-package org.example.Handlers;
+package org.ComoSeDice.Handlers;
 
 /** This class is to instantiate the players that will be playing "Como se dice" jueguito. */
 public class Player {
@@ -7,20 +7,19 @@ public class Player {
 
   /* This will keep track of how many words the players have gotten right. By default, everyone
   starts with 0 points. */
-  public int score = 0;
+  public int score;
 
-  /* This will keep track of how many words the players have gotten wrong. By default, everyone
-  starts with 0 points. */
-  public int strikes = 0;
+  /* This will keep track of the players lives. By default, everyone starts with 3 lives. */
+  public int lives;
 
   public Player(String name) {
-    this(name, 0, 0);
+    this(name, 0, 3);
   }
 
-  public Player(String name, int score, int strikes) {
+  public Player(String name, int score, int lives) {
     this.name = name;
     this.score = score;
-    this.strikes = strikes;
+    this.lives = lives;
   }
 
   /** Will add a point to the players score. */
@@ -28,14 +27,14 @@ public class Player {
     score += 1;
   }
 
-  /** Will add a point to the players number of strikes. */
-  public void addStrike() {
-    strikes += 1;
+  /** Will add a point to the players number of lives. */
+  public void removeLife() {
+    lives -= 1;
   }
 
-  /** Resets score and strikes */
+  /** Resets score and lives */
   public void reset() {
     score = 0;
-    strikes = 0;
+    lives = 3;
   }
 }

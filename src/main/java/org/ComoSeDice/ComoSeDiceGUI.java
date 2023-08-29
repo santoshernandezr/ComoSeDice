@@ -4,6 +4,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import org.ComoSeDice.Constants.ComoSeDiceConstants;
+import org.ComoSeDice.GameModes.SinglePlayer;
+import org.ComoSeDice.Handlers.ActionListenerHandler;
+import org.ComoSeDice.Handlers.Player;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -16,17 +21,18 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("org.ComoSeDice")
 @SpringBootApplication
 public class ComoSeDiceGUI extends JFrame implements ActionListener {
-
-  private final String COMO_SE_DICE_MESSAGE = "Como se dice %s?";
-  private final String WORD_IS_INCORRECT_MESSAGE = "Sorry, asi no se dice. Try again!";
-  private final String WORD_IS_CORRECT_MESSAGE = "Si, se dice %s";
-  ComoSeDiceEnum englishWord;
-  ActionListenerHandler actionListenerHandler = new ActionListenerHandler();
-
   // JLabels
   JLabel COMO_SE_DICE_LABEL;
-  JLabel WORD_IS_CORRECT_LABEL; // SetVisibility default to false
-  JLabel WORD_IS_INCORRECT_LABEL; // SetVisibility default to false
+  // Stores the "Word is correct message". SetVisibility default to false.
+  JLabel WORD_IS_CORRECT_LABEL;
+  // Stores the "Word is incorrect message". SetVisibility default to false.
+  JLabel WORD_IS_INCORRECT_LABEL;
+  // Stores the "Ran out of lives" label. SetVisibility default to false.
+  JLabel RAN_OUT_OF_LIVES_LABEL;
+  // Stores the "Score" of the player. SetVisibility default to false.
+  JLabel SCORE_LABEL;
+  // Stores the "Ganaste" message. SetVisibility default to false.
+  JLabel WINNER_LABEL;
 
   // Text Fields
   JTextField GUESS;
@@ -35,19 +41,42 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
   JButton SUBMIT;
   JButton NEW_WORD;
 
-  public ComoSeDiceGUI() {
+  @Autowired private ActionListenerHandler actionListenerHandler;
+
+  public ComoSeDiceGUI(ActionListenerHandler actionListenerHandler) {
 
     super("Como se dice!");
+    this.actionListenerHandler = actionListenerHandler;
 
-    englishWord = ComoSeDiceEnum.getRandom();
+    SinglePlayer.setWordToGuess();
 
-    COMO_SE_DICE_LABEL = new JLabel(String.format(COMO_SE_DICE_MESSAGE, englishWord));
+    Player playerOne = new Player("Roberto");
 
-    WORD_IS_INCORRECT_LABEL = new JLabel(WORD_IS_INCORRECT_MESSAGE);
+    COMO_SE_DICE_LABEL =
+        new JLabel(
+            String.format(ComoSeDiceConstants.COMO_SE_DICE_MESSAGE, SinglePlayer.wordToGuess));
+
+    SCORE_LABEL =
+        new JLabel(
+            String.format(
+                ComoSeDiceConstants.SCORE_OF_PLAYER_ONE,
+                playerOne.name,
+                playerOne.score,
+                playerOne.lives));
+    SCORE_LABEL.setVisible(true);
+
+    RAN_OUT_OF_LIVES_LABEL = new JLabel(ComoSeDiceConstants.RAN_OUT_OF_LIVES_MESSAGE);
+    RAN_OUT_OF_LIVES_LABEL.setVisible(false);
+
+    WORD_IS_INCORRECT_LABEL = new JLabel(ComoSeDiceConstants.WORD_IS_INCORRECT_MESSAGE);
     WORD_IS_INCORRECT_LABEL.setVisible(false);
 
+    WINNER_LABEL = new JLabel(ComoSeDiceConstants.WINNER_MESSAGE);
+    WINNER_LABEL.setVisible(false);
+
     WORD_IS_CORRECT_LABEL =
-        new JLabel(String.format(WORD_IS_CORRECT_MESSAGE, englishWord.getSpanish()));
+        new JLabel(
+            String.format(ComoSeDiceConstants.WORD_IS_CORRECT_MESSAGE, SinglePlayer.wordToGuess));
     WORD_IS_CORRECT_LABEL.setVisible(false);
 
     GUESS = new JTextField(10);
@@ -59,7 +88,10 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
     setLayout(new FlowLayout(FlowLayout.CENTER, 150, 20));
 
     add(COMO_SE_DICE_LABEL);
+    add(SCORE_LABEL);
     add(WORD_IS_INCORRECT_LABEL);
+    add(RAN_OUT_OF_LIVES_LABEL);
+    add(WINNER_LABEL);
 
     add(GUESS);
 
@@ -69,16 +101,23 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
 
     // Adding action handlers
     SUBMIT.addActionListener(
-        actionListenerHandler.submitButton(
-            WORD_IS_INCORRECT_LABEL, WORD_IS_CORRECT_LABEL, GUESS, englishWord));
+        this.actionListenerHandler.submitButton(
+            WORD_IS_INCORRECT_LABEL,
+            WORD_IS_CORRECT_LABEL,
+            SCORE_LABEL,
+            WINNER_LABEL,
+            RAN_OUT_OF_LIVES_LABEL,
+            GUESS,
+            playerOne));
+
     NEW_WORD.addActionListener(
-        actionListenerHandler.newWordButton(
+        this.actionListenerHandler.newWordButton(
             COMO_SE_DICE_LABEL,
             WORD_IS_CORRECT_LABEL,
             WORD_IS_INCORRECT_LABEL,
-            GUESS,
-            COMO_SE_DICE_MESSAGE,
-            WORD_IS_INCORRECT_MESSAGE));
+            WINNER_LABEL,
+            RAN_OUT_OF_LIVES_LABEL,
+            GUESS));
 
     setSize(300, 300);
     setVisible(true);
