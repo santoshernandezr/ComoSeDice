@@ -60,6 +60,12 @@ public class ActionListenerHandler implements ActionListener {
             player.addPoint();
 
             /*
+            If the player got the word correct but did not reach the winning score we will get a new word and
+            call getNewWord() to update the GUI accordingly.
+             */
+            getNewWord(comoSeDiceLabel, incorrectLabel, winnerLabel, ranOutOfLivesLabel, guess);
+
+            /*
             If the player got the word correct and has reached the winning score, then we will show the
             winning label to indicate that they have won and call setButtonsWhenPlayerWinsOrRunsOutOfLives()
             to update GUI accordingly.
@@ -70,13 +76,6 @@ public class ActionListenerHandler implements ActionListener {
               setButtonsWhenPlayerWinsOrRunsOutOfLives(
                   submitButton, newWordButton, playAgainButton);
 
-            }
-            /*
-            If the player got the word correct but did not reach the winning score we will get a new word and
-            call getNewWord() to update the GUI accordingly.
-             */
-            else {
-              getNewWord(comoSeDiceLabel, incorrectLabel, winnerLabel, ranOutOfLivesLabel, guess);
             }
           }
           /*
@@ -91,6 +90,13 @@ public class ActionListenerHandler implements ActionListener {
             winnerLabel.setVisible(false);
 
             /*
+            If the players guess was NOT correct, but they have not yet ran out of lives, then we will show
+            the incorrect label indicating their guess is wrong, but not show the ran out of lives label.
+             */
+            incorrectLabel.setVisible(true);
+            ranOutOfLivesLabel.setVisible(false);
+
+            /*
             If the players guess was NOT correct and have no lives left. We will not show the incorrectLabel
             and instead show the ran out of lives label indicating they ran out of lives. We will also call
             setButtonsWhenPlayerWinsOrRunsOutOfLives() to update the GUI accordingly.
@@ -101,14 +107,6 @@ public class ActionListenerHandler implements ActionListener {
 
               setButtonsWhenPlayerWinsOrRunsOutOfLives(
                   submitButton, newWordButton, playAgainButton);
-            }
-            /*
-            If the players guess was NOT correct, but they have not yet ran out of lives, then we will show
-            the incorrect label indicating their guess is wrong, but not show the ran out of lives label.
-             */
-            else {
-              incorrectLabel.setVisible(true);
-              ranOutOfLivesLabel.setVisible(false);
             }
           }
 
