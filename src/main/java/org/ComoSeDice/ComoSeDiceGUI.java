@@ -38,6 +38,7 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
   // Buttons
   JButton SUBMIT;
   JButton NEW_WORD;
+  JButton PLAY_AGAIN;
 
   @Autowired private ActionListenerHandler actionListenerHandler;
 
@@ -78,6 +79,9 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
 
     NEW_WORD = new JButton("New word");
 
+    PLAY_AGAIN = new JButton("Play again");
+    PLAY_AGAIN.setVisible(false);
+
     setLayout(new FlowLayout(FlowLayout.CENTER, 150, 20));
 
     add(COMO_SE_DICE_LABEL);
@@ -90,10 +94,14 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
 
     add(SUBMIT);
     add(NEW_WORD);
+    add(PLAY_AGAIN);
 
     // Adding action listeners
     SUBMIT.addActionListener(
         this.actionListenerHandler.submitButton(
+            SUBMIT,
+            NEW_WORD,
+            PLAY_AGAIN,
             COMO_SE_DICE_LABEL,
             WORD_IS_INCORRECT_LABEL,
             SCORE_LABEL,
@@ -109,6 +117,19 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
             WINNER_LABEL,
             RAN_OUT_OF_LIVES_LABEL,
             GUESS));
+
+    PLAY_AGAIN.addActionListener(
+        this.actionListenerHandler.playAgainButton(
+            SUBMIT,
+            NEW_WORD,
+            PLAY_AGAIN,
+            COMO_SE_DICE_LABEL,
+            WORD_IS_INCORRECT_LABEL,
+            WINNER_LABEL,
+            RAN_OUT_OF_LIVES_LABEL,
+            SCORE_LABEL,
+            GUESS,
+            playerOne));
 
     setSize(300, 300);
     setVisible(true);
