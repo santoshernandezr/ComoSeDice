@@ -75,7 +75,6 @@ public class ActionListenerHandler implements ActionListener {
 
               setButtonsWhenPlayerWinsOrRunsOutOfLives(
                   submitButton, newWordButton, playAgainButton);
-
             }
           }
           /*
