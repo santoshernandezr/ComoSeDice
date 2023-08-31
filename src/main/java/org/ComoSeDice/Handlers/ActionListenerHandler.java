@@ -148,9 +148,10 @@ public class ActionListenerHandler implements ActionListener {
   /**
    * This action listener is for the "Play again" button. This button will get a new word by calling
    * {@link ActionListenerHandler#getNewWord(JLabel, JLabel, JLabel, JLabel, JTextField)}, reset the
-   * players score and lives back to 0 and 3 respectively by calling {@link Player#reset()}. It will
-   * also update the GUI accordingly, meaning that it will hide the "Play again" button and show the
-   * "Submit" and "New word" button.
+   * players score and lives back to 0 and 3 respectively by calling {@link Player#reset()}. This
+   * will also empty out the {@link SinglePlayer#wordsAlreadyUsed} list which contains all the words
+   * used during the single player session. It will also update the GUI accordingly, meaning that it
+   * will hide the "Play again" button and show the "Submit" and "New word" button.
    *
    * @param submitButton JButton that stores the "submit" button.
    * @param newWordButton JButton that stores the "new word" button.
@@ -188,6 +189,8 @@ public class ActionListenerHandler implements ActionListener {
                   player.name,
                   player.score,
                   player.lives));
+          // We will reset the list that contains the used words
+          SinglePlayer.resetWords();
         };
     return newWord;
   }
