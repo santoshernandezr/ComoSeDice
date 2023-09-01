@@ -17,6 +17,7 @@ public class SinglePlayer {
   // Stores the amount a words a player has to get right in order for them to win.
   public static final int winnerScore = 5;
 
+  // List that stores the words that have already been guessed.
   public static List<ComoSeDiceEnum> wordsAlreadyUsed = new ArrayList<>();
 
   /**
