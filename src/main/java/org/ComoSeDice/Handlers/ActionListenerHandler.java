@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import org.ComoSeDice.Constants.ComoSeDiceConstants;
 import org.ComoSeDice.GameModes.SinglePlayer;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -53,8 +54,11 @@ public class ActionListenerHandler implements ActionListener {
           /*
           If the players guess was correct we give a point to the player and checks whether they have
           reached the winning score.
+          TODO - this if will change once hard mode is implemented. We will want to check if hard mode is on or not.
           */
-          if (guess.getText().equalsIgnoreCase(SinglePlayer.wordToGuess.getSpanish())) {
+          if (guess
+              .getText()
+              .equalsIgnoreCase(StringUtils.stripAccents(SinglePlayer.wordToGuess.getSpanish()))) {
 
             // Give the player a point.
             player.addPoint();
