@@ -3,6 +3,8 @@ package org.ComoSeDice;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.*;
 import org.ComoSeDice.Constants.ComoSeDiceConstants;
 import org.ComoSeDice.GameModes.SinglePlayer;
@@ -130,6 +132,27 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
             SCORE_LABEL,
             GUESS,
             playerOne));
+
+    // Key Listener for the "enter" button.
+    GUESS.addKeyListener(
+        new KeyAdapter() {
+          public void keyPressed(KeyEvent e) {
+            // Only call the check word with the enter button call when the player has lives.
+            if (e.getKeyCode() == 10 && playerOne.lives > 0) {
+              actionListenerHandler.checkWord(
+                  SUBMIT,
+                  NEW_WORD,
+                  PLAY_AGAIN,
+                  COMO_SE_DICE_LABEL,
+                  WORD_IS_INCORRECT_LABEL,
+                  SCORE_LABEL,
+                  WINNER_LABEL,
+                  RAN_OUT_OF_LIVES_LABEL,
+                  GUESS,
+                  playerOne);
+            }
+          }
+        });
 
     setSize(300, 300);
     setVisible(true);

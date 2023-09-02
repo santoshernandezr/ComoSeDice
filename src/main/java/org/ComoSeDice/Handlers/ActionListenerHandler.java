@@ -17,9 +17,10 @@ import org.springframework.stereotype.Component;
 public class ActionListenerHandler implements ActionListener {
 
   /**
-   * This action listener is for the "Submit" button. This button will check the guess of the user
-   * to see if it is the correct spanish word and then determine how the GUI will be updated
-   * according to the scenario/case of the game.
+   * This action listener is for the "Submit" button. This button will call the method {@link
+   * ActionListenerHandler#checkWord(JButton, JButton, JButton, JLabel, JLabel, JLabel, JLabel,
+   * JLabel, JTextField, Player)} to check the guess of the user to see if it is the correct spanish
+   * word and then determine how the GUI will be updated according to the scenario/case of the game.
    *
    * @param submitButton JButton that stores the "submit" button.
    * @param newWordButton JButton that stores the "new word" button.
@@ -47,74 +48,17 @@ public class ActionListenerHandler implements ActionListener {
 
     ActionListener submit =
         e -> {
-          incorrectLabel.setVisible(false);
-          ranOutOfLivesLabel.setVisible(false);
-
-          /*
-          If the players guess was correct we give a point to the player and checks whether they have
-          reached the winning score.
-          */
-          if (guess.getText().equalsIgnoreCase(SinglePlayer.wordToGuess.getSpanish())) {
-
-            // Give the player a point.
-            player.addPoint();
-
-            /*
-            If the player got the word correct but did not reach the winning score we will get a new word and
-            call getNewWord() to update the GUI accordingly.
-             */
-            getNewWord(comoSeDiceLabel, incorrectLabel, winnerLabel, ranOutOfLivesLabel, guess);
-
-            /*
-            If the player got the word correct and has reached the winning score, then we will show the
-            winning label to indicate that they have won and call setButtonsWhenPlayerWinsOrRunsOutOfLives()
-            to update GUI accordingly.
-             */
-            if (player.score == SinglePlayer.winnerScore) {
-              winnerLabel.setVisible(true);
-
-              setButtonsWhenPlayerWinsOrRunsOutOfLives(
-                  submitButton, newWordButton, playAgainButton);
-            }
-          }
-          /*
-          If the players guess was NOT correct we deduct a life from the player and checks whether they have
-          run out of lives.
-          */
-          else {
-            // Removing a life from the player.
-            player.removeLife();
-
-            // Since the guess was incorrect, we do not show the winner label.
-            winnerLabel.setVisible(false);
-
-            /*
-            If the players guess was NOT correct, but they have not yet ran out of lives, then we will show
-            the incorrect label indicating their guess is wrong, but not show the ran out of lives label.
-             */
-            incorrectLabel.setVisible(true);
-            ranOutOfLivesLabel.setVisible(false);
-
-            /*
-            If the players guess was NOT correct and have no lives left. We will not show the incorrectLabel
-            and instead show the ran out of lives label indicating they ran out of lives. We will also call
-            setButtonsWhenPlayerWinsOrRunsOutOfLives() to update the GUI accordingly.
-             */
-            if (player.lives <= 0) {
-              incorrectLabel.setVisible(false);
-              ranOutOfLivesLabel.setVisible(true);
-
-              setButtonsWhenPlayerWinsOrRunsOutOfLives(
-                  submitButton, newWordButton, playAgainButton);
-            }
-          }
-
-          scoreLabel.setText(
-              String.format(
-                  ComoSeDiceConstants.SCORE_OF_PLAYER_ONE,
-                  player.name,
-                  player.score,
-                  player.lives));
+          checkWord(
+              submitButton,
+              newWordButton,
+              playAgainButton,
+              comoSeDiceLabel,
+              incorrectLabel,
+              scoreLabel,
+              winnerLabel,
+              ranOutOfLivesLabel,
+              guess,
+              player);
         };
     return submit;
   }
@@ -248,6 +192,98 @@ public class ActionListenerHandler implements ActionListener {
     playAgainButton.setVisible(true);
     submitButton.setVisible(false);
     newWordButton.setVisible(false);
+  }
+
+  /**
+   * This method is used by the "Submit" button and when the player presses the enter button. This
+   * button will check the guess of the user to see if it is the correct spanish word and then
+   * determine how the GUI will be updated according to the scenario/case of the game.
+   *
+   * @param submitButton JButton that stores the "submit" button.
+   * @param newWordButton JButton that stores the "new word" button.
+   * @param playAgainButton JButton that stores the "play again" button.
+   * @param comoSeDiceLabel JLabel that stores the "Como se dice" message.
+   * @param incorrectLabel JLabel that stores the "Word is incorrect" message.
+   * @param scoreLabel JLabel that stores the "Score" of the player.
+   * @param winnerLabel JLabel that stores the "Ganaste" message.
+   * @param ranOutOfLivesLabel JLabel that stores the "Ran out of lives" message.
+   * @param guess JLabel that has the users guess.
+   * @param player Instance of the current player.
+   */
+  public void checkWord(
+      JButton submitButton,
+      JButton newWordButton,
+      JButton playAgainButton,
+      JLabel comoSeDiceLabel,
+      JLabel incorrectLabel,
+      JLabel scoreLabel,
+      JLabel winnerLabel,
+      JLabel ranOutOfLivesLabel,
+      JTextField guess,
+      Player player) {
+    incorrectLabel.setVisible(false);
+    ranOutOfLivesLabel.setVisible(false);
+
+    /*
+    If the players guess was correct we give a point to the player and checks whether they have
+    reached the winning score.
+    */
+    if (guess.getText().equalsIgnoreCase(SinglePlayer.wordToGuess.getSpanish())) {
+
+      // Give the player a point.
+      player.addPoint();
+
+      /*
+      If the player got the word correct but did not reach the winning score we will get a new word and
+      call getNewWord() to update the GUI accordingly.
+       */
+      getNewWord(comoSeDiceLabel, incorrectLabel, winnerLabel, ranOutOfLivesLabel, guess);
+
+      /*
+      If the player got the word correct and has reached the winning score, then we will show the
+      winning label to indicate that they have won and call setButtonsWhenPlayerWinsOrRunsOutOfLives()
+      to update GUI accordingly.
+       */
+      if (player.score == SinglePlayer.winnerScore) {
+        winnerLabel.setVisible(true);
+
+        setButtonsWhenPlayerWinsOrRunsOutOfLives(submitButton, newWordButton, playAgainButton);
+      }
+    }
+    /*
+    If the players guess was NOT correct we deduct a life from the player and checks whether they have
+    run out of lives.
+    */
+    else {
+      // Removing a life from the player.
+      player.removeLife();
+
+      // Since the guess was incorrect, we do not show the winner label.
+      winnerLabel.setVisible(false);
+
+      /*
+      If the players guess was NOT correct, but they have not yet ran out of lives, then we will show
+      the incorrect label indicating their guess is wrong, but not show the ran out of lives label.
+       */
+      incorrectLabel.setVisible(true);
+      ranOutOfLivesLabel.setVisible(false);
+
+      /*
+      If the players guess was NOT correct and have no lives left. We will not show the incorrectLabel
+      and instead show the ran out of lives label indicating they ran out of lives. We will also call
+      setButtonsWhenPlayerWinsOrRunsOutOfLives() to update the GUI accordingly.
+       */
+      if (player.lives <= 0) {
+        incorrectLabel.setVisible(false);
+        ranOutOfLivesLabel.setVisible(true);
+
+        setButtonsWhenPlayerWinsOrRunsOutOfLives(submitButton, newWordButton, playAgainButton);
+      }
+    }
+
+    scoreLabel.setText(
+        String.format(
+            ComoSeDiceConstants.SCORE_OF_PLAYER_ONE, player.name, player.score, player.lives));
   }
 
   @Override
