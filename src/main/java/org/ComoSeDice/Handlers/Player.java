@@ -20,14 +20,17 @@ public class Player {
   */
   public int lives;
 
+  public int retries;
+
   public Player(String name) {
-    this(name, 0, 3);
+    this(name, 0, 3, 3);
   }
 
-  public Player(String name, int score, int lives) {
+  public Player(String name, int score, int lives, int retries) {
     this.name = name;
     this.score = score;
     this.lives = lives;
+    this.retries = retries;
   }
 
   /** Will add a point to the players score. */
@@ -40,9 +43,14 @@ public class Player {
     lives -= 1;
   }
 
-  /** Resets score and lives to 0, 0. */
+  public void deductRetry() {
+    retries -= 1;
+  }
+
+  /** Resets score, lives, and retries to 0, 3, 3. */
   public void reset() {
     score = 0;
     lives = 3;
+    retries = 3;
   }
 }

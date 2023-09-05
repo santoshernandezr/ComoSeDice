@@ -1,12 +1,17 @@
 package org.ComoSeDice;
 
-import java.awt.*;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import org.ComoSeDice.Constants.ComoSeDiceConstants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
-import org.ComoSeDice.Constants.ComoSeDiceConstants;
 import org.ComoSeDice.GameModes.SinglePlayer;
 import org.ComoSeDice.Handlers.ActionListenerHandler;
 import org.ComoSeDice.Handlers.Player;
@@ -63,7 +68,8 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
                 ComoSeDiceConstants.SCORE_OF_PLAYER_ONE,
                 playerOne.name,
                 playerOne.score,
-                playerOne.lives));
+                playerOne.lives,
+                playerOne.retries));
     SCORE_LABEL.setVisible(true);
 
     RAN_OUT_OF_LIVES_LABEL = new JLabel(ComoSeDiceConstants.RAN_OUT_OF_LIVES_MESSAGE);
@@ -114,11 +120,14 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
 
     NEW_WORD.addActionListener(
         this.actionListenerHandler.newWordButton(
+            NEW_WORD,
             COMO_SE_DICE_LABEL,
             WORD_IS_INCORRECT_LABEL,
+            SCORE_LABEL,
             WINNER_LABEL,
             RAN_OUT_OF_LIVES_LABEL,
-            GUESS));
+            GUESS,
+            playerOne));
 
     PLAY_AGAIN.addActionListener(
         this.actionListenerHandler.playAgainButton(

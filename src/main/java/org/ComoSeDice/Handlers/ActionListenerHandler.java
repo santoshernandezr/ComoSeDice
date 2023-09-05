@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import org.ComoSeDice.Constants.ComoSeDiceConstants;
 import org.ComoSeDice.GameModes.SinglePlayer;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -64,27 +65,45 @@ public class ActionListenerHandler implements ActionListener {
   }
 
   /**
-   * This action listener is for the "New word" button. It will generate a new word by calling
-   * {@link ActionListenerHandler#getNewWord(JLabel, JLabel, JLabel, JLabel, JTextField)} and update
-   * the GUI accordingly.
+   * This action listener is for the "New word" button. It will first deduct a retry from the
+   * player, and then check if the amount of retries the player has. If the player has 0 retries, it
+   * will hide the "New word" button, so they can no longer generate a new word while playing. If
+   * they still have retries, it will generate a new word by calling {@link
+   * ActionListenerHandler#getNewWord(JLabel, JLabel, JLabel, JLabel, JTextField)} and update the
+   * GUI accordingly.
    *
+   * @param newWordButton JButton that stores the "new word" button.
    * @param comoSeDiceLabel JLabel that stores the "Como se dice" message.
    * @param incorrectLabel JLabel that stores the "Word is incorrect" message.
+   * @param scoreLabel JLabel that stores the "Score" of the player.
    * @param winnerLabel JLabel that stores the "Ganaste" message.
    * @param ranOutOfLivesLabel JLabel that stores the "Ran out of lives" message.
    * @param guess JLabel that has the users guess.
+   * @param player Instance of the current player.
    * @return Action Listener to be used for the "New word" button.
    */
   public ActionListener newWordButton(
+      JButton newWordButton,
       JLabel comoSeDiceLabel,
       JLabel incorrectLabel,
+      JLabel scoreLabel,
       JLabel winnerLabel,
       JLabel ranOutOfLivesLabel,
-      JTextField guess) {
+      JTextField guess,
+      Player player) {
 
     ActionListener newWord =
         e -> {
-          getNewWord(comoSeDiceLabel, incorrectLabel, winnerLabel, ranOutOfLivesLabel, guess);
+          // Deduct a retry from the player
+          player.deductRetry();
+
+          updateScoreLabel(scoreLabel, player);
+          // If the player has no retries left, hide the "New word" button.
+          if (player.retries <= 0) {
+            newWordButton.setVisible(false);
+          } else { // If the player has retries left, generate a new word.
+            getNewWord(comoSeDiceLabel, incorrectLabel, winnerLabel, ranOutOfLivesLabel, guess);
+          }
         };
     return newWord;
   }
@@ -104,6 +123,7 @@ public class ActionListenerHandler implements ActionListener {
    * @param incorrectLabel JLabel that stores the "Word is incorrect" message.
    * @param winnerLabel JLabel that stores the "Ganaste" message.
    * @param ranOutOfLivesLabel JLabel that stores the "Ran out of lives" message.
+   * @param scoreLabel JLabel that stores the "Score" of the player.
    * @param guess JLabel that has the users guess.
    * @param player Instance of the current player.
    * @return Action listener to be used for the "Play again" button.
@@ -127,13 +147,8 @@ public class ActionListenerHandler implements ActionListener {
           submitButton.setVisible(true);
           newWordButton.setVisible(true);
           playAgainButton.setVisible(false);
-          scoreLabel.setText(
-              String.format(
-                  ComoSeDiceConstants.SCORE_OF_PLAYER_ONE,
-                  player.name,
-                  player.score,
-                  player.lives));
-          // We will reset the list that contains the used words
+
+          updateScoreLabel(scoreLabel, player);
           SinglePlayer.resetWords();
         };
     return newWord;
@@ -285,6 +300,24 @@ public class ActionListenerHandler implements ActionListener {
         String.format(
             ComoSeDiceConstants.SCORE_OF_PLAYER_ONE, player.name, player.score, player.lives));
   }
+
+  /**
+   * This method will update the score label, so it will update {@link
+   * ComoSeDiceConstants#SCORE_OF_PLAYER_ONE}
+   *
+   * @param scoreLabel JLabel that stores the "Score" of the player.
+   * @param player Instance of the current player.
+   */
+  public void updateScoreLabel(JLabel scoreLabel, Player player) {
+    scoreLabel.setText(
+        String.format(
+            ComoSeDiceConstants.SCORE_OF_PLAYER_ONE,
+            player.name,
+            player.score,
+            player.lives,
+            player.retries));
+  }
+
 
   @Override
   public void actionPerformed(ActionEvent e) {
