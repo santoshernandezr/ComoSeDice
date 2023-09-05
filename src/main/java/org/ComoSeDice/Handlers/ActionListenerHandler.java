@@ -243,7 +243,9 @@ public class ActionListenerHandler implements ActionListener {
     If the players guess was correct we give a point to the player and checks whether they have
     reached the winning score.
     */
-    if (guess.getText().equalsIgnoreCase(SinglePlayer.wordToGuess.getSpanish())) {
+    if (guess
+        .getText()
+        .equalsIgnoreCase(StringUtils.stripAccents(SinglePlayer.wordToGuess.getSpanish()))) {
 
       // Give the player a point.
       player.addPoint();
@@ -296,9 +298,7 @@ public class ActionListenerHandler implements ActionListener {
       }
     }
 
-    scoreLabel.setText(
-        String.format(
-            ComoSeDiceConstants.SCORE_OF_PLAYER_ONE, player.name, player.score, player.lives));
+    updateScoreLabel(scoreLabel, player);
   }
 
   /**
