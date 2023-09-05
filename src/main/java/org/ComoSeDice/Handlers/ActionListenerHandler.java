@@ -318,7 +318,6 @@ public class ActionListenerHandler implements ActionListener {
             player.retries));
   }
 
-
   @Override
   public void actionPerformed(ActionEvent e) {
     // Here for the sole purpose of making the class happy.
