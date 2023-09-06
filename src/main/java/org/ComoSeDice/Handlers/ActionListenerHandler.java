@@ -48,19 +48,17 @@ public class ActionListenerHandler implements ActionListener {
       Player player) {
 
     ActionListener submit =
-        e -> {
-          checkWord(
-              submitButton,
-              newWordButton,
-              playAgainButton,
-              comoSeDiceLabel,
-              incorrectLabel,
-              scoreLabel,
-              winnerLabel,
-              ranOutOfLivesLabel,
-              guess,
-              player);
-        };
+        e -> checkWord(
+            submitButton,
+            newWordButton,
+            playAgainButton,
+            comoSeDiceLabel,
+            incorrectLabel,
+            scoreLabel,
+            winnerLabel,
+            ranOutOfLivesLabel,
+            guess,
+            player);
     return submit;
   }
 
@@ -100,6 +98,7 @@ public class ActionListenerHandler implements ActionListener {
           updateScoreLabel(scoreLabel, player);
           // If the player has no retries left, hide the "New word" button.
           if (player.retries <= 0) {
+            getNewWord(comoSeDiceLabel, incorrectLabel, winnerLabel, ranOutOfLivesLabel, guess);
             newWordButton.setVisible(false);
           } else { // If the player has retries left, generate a new word.
             getNewWord(comoSeDiceLabel, incorrectLabel, winnerLabel, ranOutOfLivesLabel, guess);
