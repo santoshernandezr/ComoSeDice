@@ -7,7 +7,7 @@ package org.ComoSeDice.Handlers;
  */
 public class Player {
   // The name of the player.
-  public final String name;
+  public String name;
 
   /*
   This will keep track of how many words the players have gotten right. By default, everyone
@@ -22,8 +22,8 @@ public class Player {
 
   public int retries;
 
-  public Player(String name) {
-    this(name, 0, 3, 3);
+  public Player() {
+    this(null, 0, 3, 3);
   }
 
   public Player(String name, int score, int lives, int retries) {
@@ -52,5 +52,9 @@ public class Player {
     score = 0;
     lives = 3;
     retries = 3;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 }

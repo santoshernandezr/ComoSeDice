@@ -362,7 +362,7 @@ public enum ComoSeDiceEnum {
   Whole("Todo"),
   King("Rey"),
   Street("Calle"),
-  Inch("Pulgadas"),
+  Inch("Pulgada"),
   Multiply("Multiplicar"),
   Nothing("Nada"),
   Course("Curso"),

@@ -1,11 +1,13 @@
 package org.ComoSeDice;
 
+import java.awt.Dialog;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Objects;
 import javax.swing.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,25 +30,6 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("org.ComoSeDice")
 @SpringBootApplication
 public class ComoSeDiceGUI extends JFrame implements ActionListener {
-  // JLabels
-  JLabel COMO_SE_DICE_LABEL;
-  // Stores the "Word is correct message". SetVisibility default to false.
-  JLabel WORD_IS_INCORRECT_LABEL;
-  // Stores the "Ran out of lives" label. SetVisibility default to false.
-  JLabel RAN_OUT_OF_LIVES_LABEL;
-  // Stores the "Score" of the player. SetVisibility default to false.
-  JLabel SCORE_LABEL;
-  // Stores the "Ganaste" message. SetVisibility default to false.
-  JLabel WINNER_LABEL;
-
-  // Text Fields
-  JTextField GUESS;
-
-  // Buttons
-  JButton SUBMIT;
-  JButton NEW_WORD;
-  JButton PLAY_AGAIN;
-
   @Autowired private ActionListenerHandler actionListenerHandler;
 
   public ComoSeDiceGUI(ActionListenerHandler actionListenerHandler) {
@@ -54,15 +37,17 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
     super("Como se dice!");
     this.actionListenerHandler = actionListenerHandler;
 
+    Player playerOne = new Player();
+
+    createDialog(this, playerOne);
+
     SinglePlayer.setWordToGuess();
 
-    Player playerOne = new Player("Roberto");
-
-    COMO_SE_DICE_LABEL =
+    JLabel COMO_SE_DICE_LABEL =
         new JLabel(
             String.format(ComoSeDiceConstants.COMO_SE_DICE_MESSAGE, SinglePlayer.wordToGuess));
 
-    SCORE_LABEL =
+    JLabel SCORE_LABEL =
         new JLabel(
             String.format(
                 ComoSeDiceConstants.SCORE_OF_PLAYER_ONE,
@@ -72,22 +57,22 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
                 playerOne.retries));
     SCORE_LABEL.setVisible(true);
 
-    RAN_OUT_OF_LIVES_LABEL = new JLabel(ComoSeDiceConstants.RAN_OUT_OF_LIVES_MESSAGE);
+    JLabel RAN_OUT_OF_LIVES_LABEL = new JLabel(ComoSeDiceConstants.RAN_OUT_OF_LIVES_MESSAGE);
     RAN_OUT_OF_LIVES_LABEL.setVisible(false);
 
-    WORD_IS_INCORRECT_LABEL = new JLabel(ComoSeDiceConstants.WORD_IS_INCORRECT_MESSAGE);
+    JLabel WORD_IS_INCORRECT_LABEL = new JLabel(ComoSeDiceConstants.WORD_IS_INCORRECT_MESSAGE);
     WORD_IS_INCORRECT_LABEL.setVisible(false);
 
-    WINNER_LABEL = new JLabel(ComoSeDiceConstants.WINNER_MESSAGE);
+    JLabel WINNER_LABEL = new JLabel(ComoSeDiceConstants.WINNER_MESSAGE);
     WINNER_LABEL.setVisible(false);
 
-    GUESS = new JTextField(10);
+    JTextField GUESS = new JTextField(10);
 
-    SUBMIT = new JButton("Se dice");
+    JButton SUBMIT = new JButton("Se dice");
 
-    NEW_WORD = new JButton("New word");
+    JButton NEW_WORD = new JButton("New word");
 
-    PLAY_AGAIN = new JButton("Play again");
+    JButton PLAY_AGAIN = new JButton("Play again");
     PLAY_AGAIN.setVisible(false);
 
     setLayout(new FlowLayout(FlowLayout.CENTER, 150, 20));
@@ -165,6 +150,57 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
 
     setSize(300, 300);
     setVisible(true);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  }
+
+  /**
+   * This will bring up a modal to tell the user to play and for them to enter their username.
+   *
+   * @param frame the MAIN GUI {@link ComoSeDiceGUI}
+   * @param player the player object that will be used.
+   */
+  private static void createDialog(final JFrame frame, Player player) {
+
+    JDialog modelDialog = new JDialog(frame, "Como Se Dice!", Dialog.ModalityType.DOCUMENT_MODAL);
+
+    JLabel LETS_PLAY_LABEL = new JLabel("Hola, let's play Como Se Dice!");
+    JLabel USERNAME_LABEL = new JLabel("Username");
+
+    JTextField USERNAME_TEXT = new JTextField(10);
+
+    modelDialog.setLayout(new FlowLayout(FlowLayout.CENTER, 180, 25));
+
+    modelDialog.add(LETS_PLAY_LABEL);
+    modelDialog.add(USERNAME_LABEL);
+    modelDialog.add(USERNAME_TEXT);
+
+    JButton PLAY_BUTTON = new JButton("Play");
+
+    PLAY_BUTTON.addActionListener(
+        e -> {
+          if (!Objects.equals(USERNAME_TEXT.getText(), "")) {
+            modelDialog.setVisible(false);
+            player.setName(USERNAME_TEXT.getText());
+          }
+        });
+
+    // Key Listener for the "enter" button.
+    USERNAME_TEXT.addKeyListener(
+        new KeyAdapter() {
+          public void keyPressed(KeyEvent e) {
+            // Hide the model and set the username to the player object when the button pressed is
+            // entered and the text is not empty.
+            if (e.getKeyCode() == 10 && (!Objects.equals(USERNAME_TEXT.getText(), ""))) {
+              modelDialog.setVisible(false);
+              player.setName(USERNAME_TEXT.getText());
+            }
+          }
+        });
+
+    modelDialog.add(PLAY_BUTTON);
+
+    modelDialog.setSize(300, 300);
+    modelDialog.setVisible(true);
   }
 
   public static void main(String[] args) {
