@@ -148,7 +148,7 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
           }
         });
 
-    setSize(300, 300);
+    setSize(400, 400);
     setVisible(true);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
@@ -164,11 +164,12 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
     JDialog modelDialog = new JDialog(frame, "Como Se Dice!", Dialog.ModalityType.DOCUMENT_MODAL);
 
     JLabel LETS_PLAY_LABEL = new JLabel("Hola, let's play Como Se Dice!");
-    JLabel USERNAME_LABEL = new JLabel("Username");
+    JLabel USERNAME_LABEL = new JLabel("Enter username:");
+    JLabel RULES_LABEL = new JLabel("Rules:");
 
     JTextField USERNAME_TEXT = new JTextField(10);
 
-    modelDialog.setLayout(new FlowLayout(FlowLayout.CENTER, 180, 25));
+    modelDialog.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 15));
 
     modelDialog.add(LETS_PLAY_LABEL);
     modelDialog.add(USERNAME_LABEL);
@@ -199,7 +200,16 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
 
     modelDialog.add(PLAY_BUTTON);
 
-    modelDialog.setSize(300, 300);
+    modelDialog.add(RULES_LABEL);
+
+    // Text area was the best bet for the RULES string.
+    JTextArea RULES_TEXT_AREA = new JTextArea(ComoSeDiceConstants.RULES_MESSAGE);
+    RULES_TEXT_AREA.setWrapStyleWord(true);
+    RULES_TEXT_AREA.setBackground(frame.getBackground());
+
+    modelDialog.add(RULES_TEXT_AREA);
+
+    modelDialog.setSize(400, 400);
     modelDialog.setVisible(true);
   }
 

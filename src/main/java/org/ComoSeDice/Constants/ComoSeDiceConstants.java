@@ -7,4 +7,19 @@ public class ComoSeDiceConstants {
   public static final String SCORE_OF_PLAYER_ONE = "%s : %o  Lives : %o  Retries : %o";
   public static String RAN_OUT_OF_LIVES_MESSAGE = "Oh no, you have ran out of lives :(";
   public static String WINNER_MESSAGE = "Yay, ganaste!";
+
+  public static String RULES_MESSAGE =
+      """
+        1. You will given a word in English and you have to spell
+        out in Spanish.
+        2. You will be given 3 lives and 3 retries. You will lose a
+        life everytime you guess incorrectly. Retries mean you can
+        generate a new word to guess.
+        3. You need 5 points to win.
+        4. Have fun :)!!
+
+        Note: Some of the words that will be used have accent marks
+        in their spanish form, however, for now we will be ignoring
+        accent marks.
+      """;
 }
