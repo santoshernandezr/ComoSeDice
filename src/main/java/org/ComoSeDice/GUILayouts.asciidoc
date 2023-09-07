@@ -1,0 +1,6 @@
+= GUI Layouts
+:toc:
+
+== Menu Layout
+
+image::/images/ComoSeDiceMenuLayout.png[]

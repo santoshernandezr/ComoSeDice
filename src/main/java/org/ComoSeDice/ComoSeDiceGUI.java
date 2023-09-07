@@ -163,86 +163,67 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
    */
   private void createDialog(final JFrame frame, Player player) {
 
+    /*
+     Creating a new instance of a JDialog where all the panels will go. We have to ensure that the
+     layout is set to null to allow the panels to come in properly.
+    */
     JDialog modelDialog = new JDialog(frame, "Como Se Dice!", Dialog.ModalityType.DOCUMENT_MODAL);
     modelDialog.setLayout(null);
 
+    // Creating the welcome panel. This Welcome panel will contain the Let's play Label.
     JPanel WELCOME_PANEL = new JPanel();
-    //    WELCOME_PANEL.setBackground(Color.GREEN);
     WELCOME_PANEL.setBounds(0, 0, 400, 120);
     WELCOME_PANEL.setLayout(new BorderLayout());
-
-    JPanel PICTURE_PANEL = new JPanel();
-    PICTURE_PANEL.setBounds(100, 0, 200, 100);
-
-    ImageIcon img =
-        new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/logo.png")));
-    JLabel IMAGE_LABEL = new JLabel(img);
-    System.out.println("Width: " + img.getIconHeight() + " Height: " + img.getIconHeight());
-    System.out.println(img.getImageLoadStatus());
-
-    PICTURE_PANEL.add(IMAGE_LABEL);
-
-    JPanel USERNAME_PANEL = new JPanel();
-    //    USERNAME_PANEL.setBackground(Color.BLUE);
-    USERNAME_PANEL.setBounds(0, 120, 400, 30);
-    USERNAME_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-    JPanel RULES_PANEL = new JPanel();
-    //    RULES_PANEL.setBackground(Color.RED);
-    RULES_PANEL.setBounds(0, 160, 400, 220);
-    RULES_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-    TitledBorder centerBorder = BorderFactory.createTitledBorder("Rules");
-    centerBorder.setTitleJustification(TitledBorder.CENTER);
-    RULES_PANEL.setBorder(centerBorder);
 
     JLabel LETS_PLAY_LABEL = new JLabel("Hola, let's play Como Se Dice!");
     LETS_PLAY_LABEL.setVerticalAlignment(JLabel.BOTTOM);
     LETS_PLAY_LABEL.setHorizontalAlignment(JLabel.CENTER);
 
-    JLabel USERNAME_LABEL = new JLabel("Enter username:");
-    JLabel RULES_LABEL = new JLabel("Rules:");
+    WELCOME_PANEL.add(LETS_PLAY_LABEL);
 
-    JTextField USERNAME_TEXT = new JTextField(10);
+    /*
+     Creating the picture panel which will contain the logo.png that's in the resources' directory.
+     This panel will contain the Image Icon that is made in the next few lines, IMAGE_ICON.
+    */
+    JPanel PICTURE_PANEL = new JPanel();
+    PICTURE_PANEL.setBounds(100, 0, 200, 100);
 
-    JButton PLAY_BUTTON = new JButton("Play");
+    ImageIcon IMAGE_ICON =
+        new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/logo.png")));
+    JLabel IMAGE_LABEL = new JLabel(IMAGE_ICON);
 
-    PLAY_BUTTON.addActionListener(
-        e -> {
-          if (!Objects.equals(USERNAME_TEXT.getText(), "")) {
-            modelDialog.setVisible(false);
-            player.setName(USERNAME_TEXT.getText());
-          }
-        });
+    PICTURE_PANEL.add(IMAGE_LABEL);
 
-    // Key Listener for the "enter" button.
-    USERNAME_TEXT.addKeyListener(
-        new KeyAdapter() {
-          public void keyPressed(KeyEvent e) {
-            // Hide the model and set the username to the player object when the button pressed is
-            // entered and the text is not empty.
-            if (e.getKeyCode() == 10 && (!Objects.equals(USERNAME_TEXT.getText(), ""))) {
-              modelDialog.setVisible(false);
-              player.setName(USERNAME_TEXT.getText());
-            }
-          }
-        });
+    /*
+     Creating the Username Panel. This panel will contain the Username label and Username text in
+     order for the user to enter their username.
+    */
+    JPanel USERNAME_PANEL = setUsernamePanel(player, modelDialog);
+
+    /*
+    Creating the Rules Panel. This panel will contain the Rules Text Area, and it will have a title
+    border.
+    */
+    JPanel RULES_PANEL = new JPanel();
+    RULES_PANEL.setBounds(5, 160, 390, 205);
+    RULES_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+    // Setting up the title border to be used for the Rules Panel.
+    TitledBorder CENTER_BORDER = BorderFactory.createTitledBorder("Rules");
+    CENTER_BORDER.setTitleJustification(TitledBorder.CENTER);
+    RULES_PANEL.setBorder(CENTER_BORDER);
 
     // Text area was the best bet for the RULES string.
     JTextArea RULES_TEXT_AREA = new JTextArea(ComoSeDiceConstants.RULES_MESSAGE);
     RULES_TEXT_AREA.setWrapStyleWord(true);
     RULES_TEXT_AREA.setBackground(frame.getBackground());
 
-    // Adding stuff to each panel.
-
-    WELCOME_PANEL.add(LETS_PLAY_LABEL);
-
-    USERNAME_PANEL.add(USERNAME_LABEL);
-    USERNAME_PANEL.add(USERNAME_TEXT);
-
-    //    RULES_PANEL.add(RULES_LABEL);
     RULES_PANEL.add(RULES_TEXT_AREA);
 
+    /*
+    Adding all the panels to the Model Dialog. To see how the panels are organized see
+    GUILayouts.asciidoc
+     */
     modelDialog.add(PICTURE_PANEL);
     modelDialog.add(WELCOME_PANEL);
     modelDialog.add(USERNAME_PANEL);
@@ -252,6 +233,41 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
     modelDialog.setSize(400, 400);
     modelDialog.setVisible(true);
     modelDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+  }
+
+  /**
+   * Creates and sets up Username Panel. Adds Key Listener to the Username Text Field.
+   *
+   * @param player Player object that will be created the user presses enter.
+   * @param modelDialog the JDialog in which we will add this to.
+   * @return returns USERNAME_PANEL JPanel.
+   */
+  private static JPanel setUsernamePanel(Player player, JDialog modelDialog) {
+    JPanel USERNAME_PANEL = new JPanel();
+    USERNAME_PANEL.setBounds(0, 120, 400, 30);
+    USERNAME_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+    JLabel USERNAME_LABEL = new JLabel("Enter username:");
+    JTextField USERNAME_TEXT = new JTextField(10);
+
+    // Key Listener for the "enter" button.
+    USERNAME_TEXT.addKeyListener(
+        new KeyAdapter() {
+          public void keyPressed(KeyEvent e) {
+            /*
+             Hide the model and set the username to the player object when the button pressed is
+             entered and the text is not empty.
+            */
+            if (e.getKeyCode() == 10 && (!Objects.equals(USERNAME_TEXT.getText(), ""))) {
+              modelDialog.setVisible(false);
+              player.setName(USERNAME_TEXT.getText());
+            }
+          }
+        });
+
+    USERNAME_PANEL.add(USERNAME_LABEL);
+    USERNAME_PANEL.add(USERNAME_TEXT);
+    return USERNAME_PANEL;
   }
 
   public static void main(String[] args) {

@@ -11,7 +11,7 @@ public class ComoSeDiceConstants {
   public static String RULES_MESSAGE =
       """
         1. You will given a word in English and you have to spell
-        out in Spanish.
+        it out in Spanish.
         2. You will be given 3 lives and 3 retries. You will lose a
         life everytime you guess incorrectly. Retries mean you can
         generate a new word to guess.
