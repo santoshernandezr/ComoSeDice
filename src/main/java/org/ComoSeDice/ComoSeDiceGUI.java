@@ -1,5 +1,6 @@
 package org.ComoSeDice;
 
+import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 import org.ComoSeDice.Constants.ComoSeDiceConstants;
 import org.ComoSeDice.GameModes.SinglePlayer;
 import org.ComoSeDice.Handlers.ActionListenerHandler;
@@ -159,21 +161,49 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
    * @param frame the MAIN GUI {@link ComoSeDiceGUI}
    * @param player the player object that will be used.
    */
-  private static void createDialog(final JFrame frame, Player player) {
+  private void createDialog(final JFrame frame, Player player) {
 
     JDialog modelDialog = new JDialog(frame, "Como Se Dice!", Dialog.ModalityType.DOCUMENT_MODAL);
+    modelDialog.setLayout(null);
+
+    JPanel WELCOME_PANEL = new JPanel();
+    //    WELCOME_PANEL.setBackground(Color.GREEN);
+    WELCOME_PANEL.setBounds(0, 0, 400, 120);
+    WELCOME_PANEL.setLayout(new BorderLayout());
+
+    JPanel PICTURE_PANEL = new JPanel();
+    PICTURE_PANEL.setBounds(100, 0, 200, 100);
+
+    ImageIcon img =
+        new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/logo.png")));
+    JLabel IMAGE_LABEL = new JLabel(img);
+    System.out.println("Width: " + img.getIconHeight() + " Height: " + img.getIconHeight());
+    System.out.println(img.getImageLoadStatus());
+
+    PICTURE_PANEL.add(IMAGE_LABEL);
+
+    JPanel USERNAME_PANEL = new JPanel();
+    //    USERNAME_PANEL.setBackground(Color.BLUE);
+    USERNAME_PANEL.setBounds(0, 120, 400, 30);
+    USERNAME_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+    JPanel RULES_PANEL = new JPanel();
+    //    RULES_PANEL.setBackground(Color.RED);
+    RULES_PANEL.setBounds(0, 160, 400, 220);
+    RULES_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+    TitledBorder centerBorder = BorderFactory.createTitledBorder("Rules");
+    centerBorder.setTitleJustification(TitledBorder.CENTER);
+    RULES_PANEL.setBorder(centerBorder);
 
     JLabel LETS_PLAY_LABEL = new JLabel("Hola, let's play Como Se Dice!");
+    LETS_PLAY_LABEL.setVerticalAlignment(JLabel.BOTTOM);
+    LETS_PLAY_LABEL.setHorizontalAlignment(JLabel.CENTER);
+
     JLabel USERNAME_LABEL = new JLabel("Enter username:");
     JLabel RULES_LABEL = new JLabel("Rules:");
 
     JTextField USERNAME_TEXT = new JTextField(10);
-
-    modelDialog.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 15));
-
-    modelDialog.add(LETS_PLAY_LABEL);
-    modelDialog.add(USERNAME_LABEL);
-    modelDialog.add(USERNAME_TEXT);
 
     JButton PLAY_BUTTON = new JButton("Play");
 
@@ -198,19 +228,30 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
           }
         });
 
-    modelDialog.add(PLAY_BUTTON);
-
-    modelDialog.add(RULES_LABEL);
-
     // Text area was the best bet for the RULES string.
     JTextArea RULES_TEXT_AREA = new JTextArea(ComoSeDiceConstants.RULES_MESSAGE);
     RULES_TEXT_AREA.setWrapStyleWord(true);
     RULES_TEXT_AREA.setBackground(frame.getBackground());
 
-    modelDialog.add(RULES_TEXT_AREA);
+    // Adding stuff to each panel.
 
+    WELCOME_PANEL.add(LETS_PLAY_LABEL);
+
+    USERNAME_PANEL.add(USERNAME_LABEL);
+    USERNAME_PANEL.add(USERNAME_TEXT);
+
+    //    RULES_PANEL.add(RULES_LABEL);
+    RULES_PANEL.add(RULES_TEXT_AREA);
+
+    modelDialog.add(PICTURE_PANEL);
+    modelDialog.add(WELCOME_PANEL);
+    modelDialog.add(USERNAME_PANEL);
+    modelDialog.add(RULES_PANEL);
+
+    modelDialog.pack();
     modelDialog.setSize(400, 400);
     modelDialog.setVisible(true);
+    modelDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
   }
 
   public static void main(String[] args) {

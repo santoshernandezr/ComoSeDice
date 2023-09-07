@@ -48,17 +48,18 @@ public class ActionListenerHandler implements ActionListener {
       Player player) {
 
     ActionListener submit =
-        e -> checkWord(
-            submitButton,
-            newWordButton,
-            playAgainButton,
-            comoSeDiceLabel,
-            incorrectLabel,
-            scoreLabel,
-            winnerLabel,
-            ranOutOfLivesLabel,
-            guess,
-            player);
+        e ->
+            checkWord(
+                submitButton,
+                newWordButton,
+                playAgainButton,
+                comoSeDiceLabel,
+                incorrectLabel,
+                scoreLabel,
+                winnerLabel,
+                ranOutOfLivesLabel,
+                guess,
+                player);
     return submit;
   }
 

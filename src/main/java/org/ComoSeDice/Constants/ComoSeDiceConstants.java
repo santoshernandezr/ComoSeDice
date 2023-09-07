@@ -18,8 +18,7 @@ public class ComoSeDiceConstants {
         3. You need 5 points to win.
         4. Have fun :)!!
 
-        Note: Some of the words that will be used have accent marks
-        in their spanish form, however, for now we will be ignoring
-        accent marks.
-      """;
+        Note: Some of the words that will be used have accent
+        marks in their spanish form, however, for now we will
+        be ignoring accent marks.""";
 }
