@@ -37,13 +37,38 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
   public ComoSeDiceGUI(ActionListenerHandler actionListenerHandler) {
 
     super("Como se dice!");
+    setLayout(null);
+
     this.actionListenerHandler = actionListenerHandler;
 
     Player playerOne = new Player();
 
+    // Brings up the modal which welcomes the user and asks them for their username.
     createDialog(this, playerOne);
 
     SinglePlayer.setWordToGuess();
+
+    /*
+     Creating the Picture Panel which will contain the logo.png that's in the resources' directory.
+     This panel will contain the Image Icon that is made in the next few lines, IMAGE_ICON.
+    */
+    JPanel PICTURE_PANEL = new JPanel();
+    PICTURE_PANEL.setBounds(100, 15, 200, 100);
+
+    ImageIcon IMAGE_ICON =
+        new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/logo.png")));
+    JLabel IMAGE_LABEL = new JLabel(IMAGE_ICON);
+
+    PICTURE_PANEL.add(IMAGE_LABEL);
+
+    /*
+     Creating the User Panel which will contain the possible labels that can be shown during the
+     game, i.e., Ran out of lives label, Word is incorrect label etc. It will also contain the
+     Guess Text Field in which the user will input his guess of the word.
+    */
+    JPanel USER_PANEL = new JPanel();
+    USER_PANEL.setBounds(0, 115, 400, 160);
+    USER_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 20));
 
     JLabel COMO_SE_DICE_LABEL =
         new JLabel(
@@ -70,6 +95,21 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
 
     JTextField GUESS = new JTextField(10);
 
+    USER_PANEL.add(COMO_SE_DICE_LABEL);
+    USER_PANEL.add(SCORE_LABEL);
+    USER_PANEL.add(WORD_IS_INCORRECT_LABEL);
+    USER_PANEL.add(RAN_OUT_OF_LIVES_LABEL);
+    USER_PANEL.add(GUESS);
+
+    /*
+     Creating the Button Panel which will contain the Submit, New word, and Play again buttons. The
+     Submit and New Word button will be visible, while the Play again will not.
+    */
+    JPanel BUTTON_PANEL = new JPanel();
+    BUTTON_PANEL.setBounds(0, 275, 400, 125);
+    //    BUTTON_PANEL.setBackground(Color.RED);
+    BUTTON_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER, 80, 20));
+
     JButton SUBMIT = new JButton("Se dice");
 
     JButton NEW_WORD = new JButton("New word");
@@ -77,19 +117,9 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
     JButton PLAY_AGAIN = new JButton("Play again");
     PLAY_AGAIN.setVisible(false);
 
-    setLayout(new FlowLayout(FlowLayout.CENTER, 150, 20));
-
-    add(COMO_SE_DICE_LABEL);
-    add(SCORE_LABEL);
-    add(WORD_IS_INCORRECT_LABEL);
-    add(RAN_OUT_OF_LIVES_LABEL);
-    add(WINNER_LABEL);
-
-    add(GUESS);
-
-    add(SUBMIT);
-    add(NEW_WORD);
-    add(PLAY_AGAIN);
+    BUTTON_PANEL.add(NEW_WORD);
+    BUTTON_PANEL.add(SUBMIT);
+    BUTTON_PANEL.add(PLAY_AGAIN);
 
     // Adding action listeners
     SUBMIT.addActionListener(
@@ -149,6 +179,11 @@ public class ComoSeDiceGUI extends JFrame implements ActionListener {
             }
           }
         });
+
+    // Adding panels to the JFrame.
+    add(PICTURE_PANEL);
+    add(USER_PANEL);
+    add(BUTTON_PANEL);
 
     setSize(400, 400);
     setVisible(true);

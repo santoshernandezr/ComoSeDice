@@ -3,4 +3,10 @@
 
 == Menu Layout
 
-image::/images/ComoSeDiceMenuLayout.png[]
+This document is to see the layouts and easier to maintain layouts of each GUI.
+
+image::/images/MenuGuiLayout.png[]
+
+== Single Player Layout
+
+image::/images/SinglePlayerGuiLayout.png[]
