@@ -21,10 +21,10 @@ public class SinglePlayer {
   public static List<ComoSeDiceEnum> wordsAlreadyUsed = new ArrayList<>();
 
   /**
-   * Will get a random word from {@link ComoSeDiceEnum} and checks to see that it has
-   * not already been used. If it has been used then we call the function again to regenerate a
-   * word, if it hasn't been used then we add it to {@link SinglePlayer#wordsAlreadyUsed} and set
-   * the random word to {@link SinglePlayer#wordToGuess}.
+   * Will get a random word from {@link ComoSeDiceEnum} and checks to see that it has not already
+   * been used. If it has been used then we call the function again to regenerate a word, if it
+   * hasn't been used then we add it to {@link SinglePlayer#wordsAlreadyUsed} and set the random
+   * word to {@link SinglePlayer#wordToGuess}.
    */
   public static void setWordToGuess() {
     // Get a random word.

@@ -5,20 +5,19 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import org.ComoSeDice.Common.CommonPanels;
+import org.ComoSeDice.Common.ComoSeDiceFrame;
 import org.ComoSeDice.Handlers.Player;
 
 /**
  * GUI for the Game Mode screen for the Como Se Dice game. The player will see AT THE MOMENT one
  * game mode, Normal Mode, and it will have a description and how to play.
  */
-public class GameModeGUI extends JFrame implements ActionListener {
+public class GameModeGUI extends ComoSeDiceFrame implements ActionListener {
 
   public GameModeGUI(Player player) {
     super("Game Modes!");
-    setLayout(null);
 
     /*
      Creating the Picture Panel which will contain the logo.png that's in the resources' directory.
@@ -44,9 +43,7 @@ public class GameModeGUI extends JFrame implements ActionListener {
 
     add(BUTTON_PANEL);
 
-    setSize(400, 400);
     setVisible(true);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
 
   //  public static void main(String[] args) {

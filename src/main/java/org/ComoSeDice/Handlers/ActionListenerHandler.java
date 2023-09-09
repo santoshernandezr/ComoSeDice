@@ -156,9 +156,8 @@ public class ActionListenerHandler implements ActionListener {
   }
 
   /**
-   * This method will get a new english word from {@link ComoSeDiceEnum} and set it
-   * as the new word to guess. After getting the new english word we will update the following
-   * labels:
+   * This method will get a new english word from {@link ComoSeDiceEnum} and set it as the new word
+   * to guess. After getting the new english word we will update the following labels:
    * <li>COMO_SE_DICE_LABEL: updated to include the new englishWord.
    * <li>WORD_IS_INCORRECT_LABEL: updated setVisible to false, so the label won't show.
    * <li>WINNER_LABEL: updated setVisible to false, so label won't show.

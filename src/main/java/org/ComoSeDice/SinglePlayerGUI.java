@@ -6,13 +6,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import org.ComoSeDice.Common.CommonPanels;
 import org.ComoSeDice.Common.ComoSeDiceConstants;
 import org.ComoSeDice.Common.ComoSeDiceEnum;
+import org.ComoSeDice.Common.ComoSeDiceFrame;
 import org.ComoSeDice.GameModes.SinglePlayer;
 import org.ComoSeDice.Handlers.ActionListenerHandler;
 import org.ComoSeDice.Handlers.Player;
@@ -21,14 +21,13 @@ import org.ComoSeDice.Handlers.Player;
  * GUI for the Single Player mode in the Como Se Dice game. It'll get a random word from {@link
  * ComoSeDiceEnum} and ask the user to guess the word in spanish.
  */
-public class SinglePlayerGUI extends JFrame implements ActionListener {
+public class SinglePlayerGUI extends ComoSeDiceFrame implements ActionListener {
 
   ActionListenerHandler actionListenerHandler = new ActionListenerHandler();
 
   public SinglePlayerGUI(Player player) {
 
     super("Normal Mode!");
-    setLayout(null);
 
     SinglePlayer.setWordToGuess();
 
@@ -162,9 +161,7 @@ public class SinglePlayerGUI extends JFrame implements ActionListener {
     add(USER_PANEL);
     add(BUTTON_PANEL);
 
-    setSize(400, 400);
     setVisible(true);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
 
   @Override

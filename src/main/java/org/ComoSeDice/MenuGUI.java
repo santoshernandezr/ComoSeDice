@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import org.ComoSeDice.Common.CommonPanels;
 import org.ComoSeDice.Common.ComoSeDiceConstants;
+import org.ComoSeDice.Common.ComoSeDiceFrame;
 import org.ComoSeDice.Handlers.Player;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -29,13 +30,11 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @ComponentScan("org.ComoSeDice")
 @SpringBootApplication
-public class MenuGUI extends JFrame implements ActionListener {
+public class MenuGUI extends ComoSeDiceFrame implements ActionListener {
   Player playerOne = new Player();
 
   public MenuGUI() {
     super("Como Se Dice!");
-
-    setLayout(null);
 
     // Creating the welcome panel. This Welcome panel will contain the Let's play Label.
     JPanel WELCOME_PANEL = new JPanel();
@@ -89,10 +88,7 @@ public class MenuGUI extends JFrame implements ActionListener {
     add(USERNAME_PANEL);
     add(RULES_PANEL);
 
-    pack();
-    setSize(400, 400);
     setVisible(true);
-    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
   }
 
   /**
