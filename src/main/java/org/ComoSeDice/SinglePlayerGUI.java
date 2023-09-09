@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import org.ComoSeDice.Common.CommonPanels;
 import org.ComoSeDice.Common.ComoSeDiceConstants;
+import org.ComoSeDice.Common.ComoSeDiceEnum;
 import org.ComoSeDice.GameModes.SinglePlayer;
 import org.ComoSeDice.Handlers.ActionListenerHandler;
 import org.ComoSeDice.Handlers.Player;

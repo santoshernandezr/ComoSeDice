@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import org.ComoSeDice.Common.ComoSeDiceConstants;
+import org.ComoSeDice.Common.ComoSeDiceEnum;
 import org.ComoSeDice.GameModes.SinglePlayer;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -155,7 +156,7 @@ public class ActionListenerHandler implements ActionListener {
   }
 
   /**
-   * This method will get a new english word from {@link org.ComoSeDice.ComoSeDiceEnum} and set it
+   * This method will get a new english word from {@link ComoSeDiceEnum} and set it
    * as the new word to guess. After getting the new english word we will update the following
    * labels:
    * <li>COMO_SE_DICE_LABEL: updated to include the new englishWord.

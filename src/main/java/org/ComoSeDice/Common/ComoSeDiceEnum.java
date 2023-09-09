@@ -1,4 +1,4 @@
-package org.ComoSeDice;
+package org.ComoSeDice.Common;
 
 /** Enum class to store all english to spanish words. */
 public enum ComoSeDiceEnum {

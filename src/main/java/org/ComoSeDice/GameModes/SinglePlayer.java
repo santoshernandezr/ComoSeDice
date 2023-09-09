@@ -2,7 +2,7 @@ package org.ComoSeDice.GameModes;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.ComoSeDice.ComoSeDiceEnum;
+import org.ComoSeDice.Common.ComoSeDiceEnum;
 
 /**
  * This class is to set the rules for single player mode. This contains the amount of correct words
@@ -21,7 +21,7 @@ public class SinglePlayer {
   public static List<ComoSeDiceEnum> wordsAlreadyUsed = new ArrayList<>();
 
   /**
-   * Will get a random word from {@link org.ComoSeDice.ComoSeDiceEnum} and checks to see that it has
+   * Will get a random word from {@link ComoSeDiceEnum} and checks to see that it has
    * not already been used. If it has been used then we call the function again to regenerate a
    * word, if it hasn't been used then we add it to {@link SinglePlayer#wordsAlreadyUsed} and set
    * the random word to {@link SinglePlayer#wordToGuess}.
