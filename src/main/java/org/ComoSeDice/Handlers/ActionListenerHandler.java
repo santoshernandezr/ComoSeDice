@@ -263,7 +263,6 @@ public class ActionListenerHandler implements ActionListener {
        */
       if (player.score == SinglePlayer.winnerScore) {
         winnerLabel.setVisible(true);
-
         setButtonsWhenPlayerWinsOrRunsOutOfLives(submitButton, newWordButton, playAgainButton);
       }
     }
