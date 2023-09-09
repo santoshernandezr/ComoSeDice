@@ -11,8 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 /**
- * This class is to handle all the buttons (Action Listeners) that will be used in {@link
- * org.ComoSeDice.ComoSeDiceGUI}.
+ * This class is to handle all the buttons (Action Listeners) that will be used in TODO - update this later
  */
 @Component
 public class ActionListenerHandler implements ActionListener {
