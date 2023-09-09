@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import org.ComoSeDice.Common.CommonPanels;
-import org.ComoSeDice.Constants.ComoSeDiceConstants;
+import org.ComoSeDice.Common.ComoSeDiceConstants;
 import org.ComoSeDice.GameModes.SinglePlayer;
 import org.ComoSeDice.Handlers.ActionListenerHandler;
 import org.ComoSeDice.Handlers.Player;
@@ -22,9 +22,11 @@ import org.ComoSeDice.Handlers.Player;
  */
 public class SinglePlayerGUI extends JFrame implements ActionListener {
 
-  public SinglePlayerGUI(ActionListenerHandler actionListenerHandler, Player player) {
+  ActionListenerHandler actionListenerHandler = new ActionListenerHandler();
 
-    super("Como se dice!");
+  public SinglePlayerGUI(Player player) {
+
+    super("Normal Mode!");
     setLayout(null);
 
     SinglePlayer.setWordToGuess();
@@ -164,7 +166,8 @@ public class SinglePlayerGUI extends JFrame implements ActionListener {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
 
-  // Here for the sole purpose of pleasing Action Listener.
   @Override
-  public void actionPerformed(ActionEvent e) {}
+  public void actionPerformed(ActionEvent e) {
+    // Here for the sole purpose of pleasing Action Listener.
+  }
 }

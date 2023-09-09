@@ -5,13 +5,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import org.ComoSeDice.Constants.ComoSeDiceConstants;
+import org.ComoSeDice.Common.ComoSeDiceConstants;
 import org.ComoSeDice.GameModes.SinglePlayer;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 /**
- * This class is to handle all the buttons (Action Listeners) that will be used in TODO - update this later
+ * This class is to handle all the buttons (Action Listeners) that will be used in all the GUIs
+ * where we can.
  */
 @Component
 public class ActionListenerHandler implements ActionListener {
@@ -177,8 +178,10 @@ public class ActionListenerHandler implements ActionListener {
     // Gets a new random word to guess.
     SinglePlayer.setWordToGuess();
 
-    // Updates the como se dice LABELs text which contains the como se dice MESSAGE to include the
-    // new word to guess.
+    /*
+     Updates the como se dice LABELs text which contains the como se dice MESSAGE to include the
+     new word to guess.
+    */
     comoSeDiceLabel.setText(
         String.format(ComoSeDiceConstants.COMO_SE_DICE_MESSAGE, SinglePlayer.wordToGuess));
 

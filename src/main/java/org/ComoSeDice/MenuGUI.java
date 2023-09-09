@@ -16,10 +16,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import org.ComoSeDice.Common.CommonPanels;
-import org.ComoSeDice.Constants.ComoSeDiceConstants;
-import org.ComoSeDice.Handlers.ActionListenerHandler;
+import org.ComoSeDice.Common.ComoSeDiceConstants;
 import org.ComoSeDice.Handlers.Player;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -27,24 +25,16 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Swing Spring Boot Application. This is the start of the application and will have the Menu GUI
- * and then will take the player to the Player Mode GUI.
+ * and then will take the player to the Game Mode GUI.
  */
 @ComponentScan("org.ComoSeDice")
 @SpringBootApplication
 public class MenuGUI extends JFrame implements ActionListener {
-
-  @Autowired ActionListenerHandler actionListenerHandler;
-
   Player playerOne = new Player();
 
-  public MenuGUI(ActionListenerHandler actionListenerHandler) {
-    /*
-     Creating a new instance of a JDialog where all the panels will go. We have to ensure that the
-     layout is set to null to allow the panels to come in properly.
-    */
+  public MenuGUI() {
     super("Como Se Dice!");
 
-    this.actionListenerHandler = actionListenerHandler;
     setLayout(null);
 
     // Creating the welcome panel. This Welcome panel will contain the Let's play Label.
@@ -68,7 +58,7 @@ public class MenuGUI extends JFrame implements ActionListener {
      Creating the Username Panel. This panel will contain the Username label and Username text in
      order for the user to enter their username.
     */
-    JPanel USERNAME_PANEL = setUsernamePanel(playerOne, this, actionListenerHandler);
+    JPanel USERNAME_PANEL = setUsernamePanelAndKeyListeners(playerOne, this);
 
     /*
     Creating the Rules Panel. This panel will contain the Rules Text Area, and it will have a title
@@ -109,12 +99,10 @@ public class MenuGUI extends JFrame implements ActionListener {
    * Creates and sets up Username Panel. Adds Key Listener to the Username Text Field.
    *
    * @param player Player object that will be created the user presses enter.
-   * @param menuGUI the JFrame in which we will add this to.
-   * @param actionListenerHandler TBD.
+   * @param menuGUI the JFrame MenuGUI
    * @return returns USERNAME_PANEL JPanel.
    */
-  private static JPanel setUsernamePanel(
-      Player player, JFrame menuGUI, ActionListenerHandler actionListenerHandler) {
+  private static JPanel setUsernamePanelAndKeyListeners(Player player, JFrame menuGUI) {
     JPanel USERNAME_PANEL = new JPanel();
     USERNAME_PANEL.setBounds(0, 120, 400, 30);
     USERNAME_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -132,8 +120,8 @@ public class MenuGUI extends JFrame implements ActionListener {
             */
             if (e.getKeyCode() == 10 && (!Objects.equals(USERNAME_TEXT.getText(), ""))) {
               player.setName(USERNAME_TEXT.getText());
-              SinglePlayerGUI singlePlayerGUI = new SinglePlayerGUI(actionListenerHandler, player);
-              singlePlayerGUI.setVisible(true);
+              GameModeGUI gameModeGUI = new GameModeGUI(player);
+              gameModeGUI.setVisible(true);
               menuGUI.setVisible(false);
             }
           }
@@ -157,6 +145,6 @@ public class MenuGUI extends JFrame implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    // Doesn't do anything
+    // Here for the sole purpose of pleasing Action Listener.
   }
 }
