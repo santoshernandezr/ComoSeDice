@@ -2,12 +2,17 @@ package org.ComoSeDice;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import org.ComoSeDice.Common.CommonPanels;
+import org.ComoSeDice.Common.ComoSeDiceConstants;
 import org.ComoSeDice.Common.ComoSeDiceFrame;
+import org.ComoSeDice.Common.RoundedPanel;
 import org.ComoSeDice.Handlers.Player;
 
 /**
@@ -28,29 +33,56 @@ public class GameModeGUI extends ComoSeDiceFrame implements ActionListener {
     add(PICTURE_PANEL);
 
     /*
-    Creating the Button Panel which will contain all the game modes and their respective descriptions.
-    This will be like the controller for all game modes.
+    Creating the Normal Mode Panel which will contain a panel for the Normal Game. It will contain
+    the description of Normal Mode.
      */
-    JPanel BUTTON_PANEL = new JPanel();
-    BUTTON_PANEL.setBounds(0, 115, 400, 160);
-    BUTTON_PANEL.setBackground(Color.BLUE);
-    BUTTON_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 20));
+    JPanel NORMAL_MODE_PANEL = new RoundedPanel(20, Color.CYAN);
+    NORMAL_MODE_PANEL.setBounds(5, 115, 390, 95);
+    NORMAL_MODE_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 5));
 
-    JButton NORMAL_MODE_BUTTON = new JButton("Normal Mode");
-    NORMAL_MODE_BUTTON.addActionListener(normalModeButton(this, player));
+    JLabel NORMAL_MODE_LABEL = new JLabel("Normal Mode");
+    NORMAL_MODE_LABEL.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
 
-    BUTTON_PANEL.add(NORMAL_MODE_BUTTON);
+    /*
+     Text area was the best bet for the Normal Games Rules string. We can set the setEditable
+     to false in order for it to look like a JLabel and all text wrap.
+    */
+    JTextArea NORMAL_GAME_RULES_TEXT_AREA = new JTextArea(ComoSeDiceConstants.NORMAL_GAME_RULES);
+    NORMAL_GAME_RULES_TEXT_AREA.setWrapStyleWord(true);
+    NORMAL_GAME_RULES_TEXT_AREA.setBackground(Color.CYAN);
+    NORMAL_GAME_RULES_TEXT_AREA.setEditable(false);
 
-    add(BUTTON_PANEL);
+    JButton NORMAL_MODE_BUTTON = playButton();
+    NORMAL_MODE_BUTTON.addActionListener(normalModeButtonActionListener(this, player));
+
+    /*
+     Adding all elements, Normal Mode Label, Text Area which contains the rules, and the play
+     button.
+    */
+    NORMAL_MODE_PANEL.add(NORMAL_MODE_LABEL);
+    NORMAL_MODE_PANEL.add(NORMAL_GAME_RULES_TEXT_AREA);
+    NORMAL_MODE_PANEL.add(NORMAL_MODE_BUTTON);
+
+    add(NORMAL_MODE_PANEL);
 
     setVisible(true);
   }
 
-  //  public static void main(String[] args) {
-  //    new GameModeGUI();
-  //  }
+//  public static void main(String[] args) {
+//    Player player = new Player();
+//    player.setName("Roberto");
+//    new GameModeGUI(player);
+//  }
 
-  public ActionListener normalModeButton(GameModeGUI gameModeGUI, Player player) {
+  /**
+   * Action listener that will be used for the Normal Mode. The button will hide the Game Mode GUI
+   * and show the Single player GUI.
+   *
+   * @param gameModeGUI game mode gui.
+   * @param player the player object.
+   * @return ActionListener that the Play button will use for Normal Mode.
+   */
+  public ActionListener normalModeButtonActionListener(GameModeGUI gameModeGUI, Player player) {
     ActionListener normalMode =
         e -> {
           SinglePlayerGUI singlePlayerGUI = new SinglePlayerGUI(player);
@@ -59,6 +91,18 @@ public class GameModeGUI extends ComoSeDiceFrame implements ActionListener {
         };
 
     return normalMode;
+  }
+
+  /**
+   * General Play button that all game modes will use.
+   *
+   * @return JButton that all GUIs will use.
+   */
+  public JButton playButton() {
+    JButton PLAY_BUTTON = new JButton("Play");
+    PLAY_BUTTON.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
+
+    return PLAY_BUTTON;
   }
 
   @Override

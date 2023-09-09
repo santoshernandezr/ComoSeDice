@@ -72,10 +72,14 @@ public class MenuGUI extends ComoSeDiceFrame implements ActionListener {
     CENTER_BORDER.setTitleJustification(TitledBorder.CENTER);
     RULES_PANEL.setBorder(CENTER_BORDER);
 
-    // Text area was the best bet for the RULES string.
+    /*
+     Text area was the best bet for the Rules string. We can set the setEditable to false in order
+     for it to look like a JLabel and all text wrap.
+    */
     JTextArea RULES_TEXT_AREA = new JTextArea(ComoSeDiceConstants.RULES_MESSAGE);
     RULES_TEXT_AREA.setWrapStyleWord(true);
     RULES_TEXT_AREA.setBackground(this.getBackground());
+    RULES_TEXT_AREA.setEditable(false);
 
     RULES_PANEL.add(RULES_TEXT_AREA);
 

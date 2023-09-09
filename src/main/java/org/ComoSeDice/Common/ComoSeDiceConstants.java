@@ -21,4 +21,9 @@ public class ComoSeDiceConstants {
         Note: Some of the words that will be used have accent
         marks in their spanish form, however, for now we will
         be ignoring accent marks.""";
+
+  public static String NORMAL_GAME_RULES =
+      """
+     You will be given 3 lives, 3 opportunities to generate a new
+     word (retries), and you have to get 5 points to win :).""";
 }
