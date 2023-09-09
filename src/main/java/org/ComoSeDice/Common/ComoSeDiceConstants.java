@@ -10,17 +10,16 @@ public class ComoSeDiceConstants {
 
   public static String RULES_MESSAGE =
       """
-        1. You will given a word in English and you have to spell
-        it out in Spanish.
-        2. You will be given 3 lives and 3 retries. You will lose a
-        life everytime you guess incorrectly. Retries mean you can
-        generate a new word to guess.
-        3. You need 5 points to win.
-        4. Have fun :)!!
+     1. You will given a word in English and you have to spell
+         it out in Spanish.
+     2. You will be given x amount of lives and y amount of
+         retries depending on the game mode. You will lose a life
+         everytime you guess incorrectly. Retries mean you can
+         generate a new word to guess.
+     3. Have fun :)!!
 
-        Note: Some of the words that will be used have accent
-        marks in their spanish form, however, for now we will
-        be ignoring accent marks.""";
+        Note: Accent marks will be ignoring until we implement
+        hard mode.""";
 
   public static String NORMAL_GAME_RULES =
       """

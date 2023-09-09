@@ -68,7 +68,7 @@ public class MenuGUI extends ComoSeDiceFrame implements ActionListener {
     RULES_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER));
 
     // Setting up the title border to be used for the Rules Panel.
-    TitledBorder CENTER_BORDER = BorderFactory.createTitledBorder("Rules");
+    TitledBorder CENTER_BORDER = BorderFactory.createTitledBorder("General rules");
     CENTER_BORDER.setTitleJustification(TitledBorder.CENTER);
     RULES_PANEL.setBorder(CENTER_BORDER);
 
