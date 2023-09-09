@@ -17,8 +17,8 @@ import org.ComoSeDice.Handlers.ActionListenerHandler;
 import org.ComoSeDice.Handlers.Player;
 
 /**
- * GUI for the Como Se Dice game. It'll get a random word from {@link ComoSeDiceEnum} and ask the
- * user to guess the word in spanish.
+ * GUI for the Single Player mode in the Como Se Dice game. It'll get a random word from {@link
+ * ComoSeDiceEnum} and ask the user to guess the word in spanish.
  */
 public class SinglePlayerGUI extends JFrame implements ActionListener {
 

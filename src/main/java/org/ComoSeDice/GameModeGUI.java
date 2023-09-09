@@ -10,6 +10,10 @@ import javax.swing.JPanel;
 import org.ComoSeDice.Common.CommonPanels;
 import org.ComoSeDice.Handlers.Player;
 
+/**
+ * GUI for the Game Mode screen for the Como Se Dice game. The player will see AT THE MOMENT one
+ * game mode, Normal Mode, and it will have a description and how to play.
+ */
 public class GameModeGUI extends JFrame implements ActionListener {
 
   public GameModeGUI(Player player) {
