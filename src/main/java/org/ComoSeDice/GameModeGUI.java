@@ -68,29 +68,29 @@ public class GameModeGUI extends ComoSeDiceFrame implements ActionListener {
     setVisible(true);
   }
 
-//  public static void main(String[] args) {
-//    Player player = new Player();
-//    player.setName("Roberto");
-//    new GameModeGUI(player);
-//  }
+  //  public static void main(String[] args) {
+  //    Player player = new Player();
+  //    player.setName("Roberto");
+  //    new GameModeGUI(player);
+  //  }
 
   /**
-   * Action listener that will be used for the Normal Mode. The button will hide the Game Mode GUI
-   * and show the Single player GUI.
+   * Action listener that will be used for the Normal Mode. The button will hide the {@link
+   * GameModeGUI} and show the {@link SinglePlayerGUI}.
    *
    * @param gameModeGUI game mode gui.
    * @param player the player object.
    * @return ActionListener that the Play button will use for Normal Mode.
    */
   public ActionListener normalModeButtonActionListener(GameModeGUI gameModeGUI, Player player) {
-    ActionListener normalMode =
+    ActionListener normalModeButton =
         e -> {
-          SinglePlayerGUI singlePlayerGUI = new SinglePlayerGUI(player);
+          SinglePlayerGUI singlePlayerGUI = new SinglePlayerGUI(gameModeGUI, player);
           singlePlayerGUI.setVisible(true);
           gameModeGUI.setVisible(false);
         };
 
-    return normalMode;
+    return normalModeButton;
   }
 
   /**
@@ -100,7 +100,7 @@ public class GameModeGUI extends ComoSeDiceFrame implements ActionListener {
    */
   public JButton playButton() {
     JButton PLAY_BUTTON = new JButton("Play");
-    PLAY_BUTTON.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
+    PLAY_BUTTON.setFont(new Font(Font.DIALOG, Font.PLAIN, 15));
 
     return PLAY_BUTTON;
   }

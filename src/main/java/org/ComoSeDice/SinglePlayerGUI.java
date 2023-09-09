@@ -1,6 +1,7 @@
 package org.ComoSeDice;
 
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -25,11 +26,18 @@ public class SinglePlayerGUI extends ComoSeDiceFrame implements ActionListener {
 
   ActionListenerHandler actionListenerHandler = new ActionListenerHandler();
 
-  public SinglePlayerGUI(Player player) {
+  public SinglePlayerGUI(GameModeGUI gameModeGUI, Player player) {
 
     super("Normal Mode!");
 
     SinglePlayer.setWordToGuess();
+
+    // Creating the back button. This button will allow us to go back to the Game Mode Gui.
+    JButton BACK_BUTTON = new JButton("<");
+    BACK_BUTTON.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+    BACK_BUTTON.setBounds(10, 10, 30, 20);
+
+    BACK_BUTTON.addActionListener(backButtonActionListener(gameModeGUI, this));
 
     /*
      Creating the Picture Panel which will contain the logo.png that's in the resources' directory.
@@ -157,11 +165,35 @@ public class SinglePlayerGUI extends ComoSeDiceFrame implements ActionListener {
         });
 
     // Adding panels to the JFrame.
+    add(BACK_BUTTON);
     add(PICTURE_PANEL);
     add(USER_PANEL);
     add(BUTTON_PANEL);
 
     setVisible(true);
+  }
+
+  /**
+   * Action Listener that will be used for the back button in the {@link SinglePlayerGUI}, this
+   * Action Listener will allow to go back to the {@link GameModeGUI}.
+   *
+   * @param gameModeGUI {@link GameModeGUI} instance that came in.
+   * @param singlePlayerGUI {@link SinglePlayerGUI} instance that is being used.
+   * @return ActionListener that will be used for the back button.
+   */
+  public ActionListener backButtonActionListener(
+      GameModeGUI gameModeGUI, SinglePlayerGUI singlePlayerGUI) {
+    ActionListener backButton =
+        e -> {
+          gameModeGUI.setVisible(true);
+          /*
+           Disposing the single player gui since we are starting a new instance everytime we start a
+           new Single Player game.
+          */
+          singlePlayerGUI.dispose();
+        };
+
+    return backButton;
   }
 
   @Override
