@@ -9,13 +9,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Objects;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import org.ComoSeDice.Common.CommonPanels;
 import org.ComoSeDice.Constants.ComoSeDiceConstants;
 import org.ComoSeDice.Handlers.ActionListenerHandler;
 import org.ComoSeDice.Handlers.Player;
@@ -62,14 +62,7 @@ public class MenuGUI extends JFrame implements ActionListener {
      Creating the picture panel which will contain the logo.png that's in the resources' directory.
      This panel will contain the Image Icon that is made in the next few lines, IMAGE_ICON.
     */
-    JPanel PICTURE_PANEL = new JPanel();
-    PICTURE_PANEL.setBounds(100, 0, 200, 100);
-
-    ImageIcon IMAGE_ICON =
-        new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/logo.png")));
-    JLabel IMAGE_LABEL = new JLabel(IMAGE_ICON);
-
-    PICTURE_PANEL.add(IMAGE_LABEL);
+    JPanel PICTURE_PANEL = CommonPanels.picturePanel(100, 0);
 
     /*
      Creating the Username Panel. This panel will contain the Username label and Username text in

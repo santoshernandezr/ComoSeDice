@@ -5,12 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Objects;
-import javax.swing.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import org.ComoSeDice.Common.CommonPanels;
 import org.ComoSeDice.Constants.ComoSeDiceConstants;
 import org.ComoSeDice.GameModes.SinglePlayer;
 import org.ComoSeDice.Handlers.ActionListenerHandler;
@@ -33,14 +33,7 @@ public class SinglePlayerGUI extends JFrame implements ActionListener {
      Creating the Picture Panel which will contain the logo.png that's in the resources' directory.
      This panel will contain the Image Icon that is made in the next few lines, IMAGE_ICON.
     */
-    JPanel PICTURE_PANEL = new JPanel();
-    PICTURE_PANEL.setBounds(100, 15, 200, 100);
-
-    ImageIcon IMAGE_ICON =
-        new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/logo.png")));
-    JLabel IMAGE_LABEL = new JLabel(IMAGE_ICON);
-
-    PICTURE_PANEL.add(IMAGE_LABEL);
+    JPanel PICTURE_PANEL = CommonPanels.picturePanel(100, 15);
 
     /*
      Creating the User Panel which will contain the possible labels that can be shown during the
@@ -89,7 +82,6 @@ public class SinglePlayerGUI extends JFrame implements ActionListener {
     */
     JPanel BUTTON_PANEL = new JPanel();
     BUTTON_PANEL.setBounds(0, 275, 400, 125);
-    //    BUTTON_PANEL.setBackground(Color.RED);
     BUTTON_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER, 80, 20));
 
     JButton SUBMIT = new JButton("Se dice");
