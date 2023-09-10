@@ -1,4 +1,4 @@
-package org.ComoSeDice.Translate;
+package org.game.Translate;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

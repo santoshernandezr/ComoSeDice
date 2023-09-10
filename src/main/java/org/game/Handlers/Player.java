@@ -1,4 +1,4 @@
-package org.ComoSeDice.Handlers;
+package org.game.Handlers;
 
 /**
  * This class is to instantiate the players that will be playing "Como se dice" jueguito. This will

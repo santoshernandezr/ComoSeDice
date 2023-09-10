@@ -1,4 +1,4 @@
-package org.ComoSeDice.Common;
+package org.game.Common;
 
 /** Class that contains constants that will be used throughout the Como Se Dice game. */
 public class ComoSeDiceConstants {

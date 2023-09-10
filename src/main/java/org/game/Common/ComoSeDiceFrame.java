@@ -1,4 +1,4 @@
-package org.ComoSeDice.Common;
+package org.game.Common;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;

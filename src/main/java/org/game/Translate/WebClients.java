@@ -1,4 +1,4 @@
-package org.ComoSeDice.Translate;
+package org.game.Translate;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

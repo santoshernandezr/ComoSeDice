@@ -1,4 +1,4 @@
-package org.ComoSeDice.Translate;
+package org.game.Translate;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;

@@ -1,14 +1,14 @@
-package org.ComoSeDice.Handlers;
+package org.game.Handlers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import org.ComoSeDice.Common.ComoSeDiceConstants;
-import org.ComoSeDice.Common.ComoSeDiceEnum;
-import org.ComoSeDice.GameModes.SinglePlayer;
 import org.apache.commons.lang3.StringUtils;
+import org.game.Common.ComoSeDiceConstants;
+import org.game.Common.ComoSeDiceEnum;
+import org.game.GameModes.SinglePlayer;
 import org.springframework.stereotype.Component;
 
 /**

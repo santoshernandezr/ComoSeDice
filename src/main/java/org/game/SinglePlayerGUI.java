@@ -1,4 +1,4 @@
-package org.ComoSeDice;
+package org.game;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -10,13 +10,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.ComoSeDice.Common.CommonPanels;
-import org.ComoSeDice.Common.ComoSeDiceConstants;
-import org.ComoSeDice.Common.ComoSeDiceEnum;
-import org.ComoSeDice.Common.ComoSeDiceFrame;
-import org.ComoSeDice.GameModes.SinglePlayer;
-import org.ComoSeDice.Handlers.ActionListenerHandler;
-import org.ComoSeDice.Handlers.Player;
+import org.game.Common.CommonPanels;
+import org.game.Common.ComoSeDiceConstants;
+import org.game.Common.ComoSeDiceEnum;
+import org.game.Common.ComoSeDiceFrame;
+import org.game.GameModes.SinglePlayer;
+import org.game.Handlers.ActionListenerHandler;
+import org.game.Handlers.Player;
 
 /**
  * GUI for the Single Player mode in the Como Se Dice game. It'll get a random word from {@link

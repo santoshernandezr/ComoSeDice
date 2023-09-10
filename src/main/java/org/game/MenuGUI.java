@@ -1,4 +1,4 @@
-package org.ComoSeDice;
+package org.game;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -15,10 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-import org.ComoSeDice.Common.CommonPanels;
-import org.ComoSeDice.Common.ComoSeDiceConstants;
-import org.ComoSeDice.Common.ComoSeDiceFrame;
-import org.ComoSeDice.Handlers.Player;
+import org.game.Common.CommonPanels;
+import org.game.Common.ComoSeDiceConstants;
+import org.game.Common.ComoSeDiceFrame;
+import org.game.Handlers.Player;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;

@@ -1,4 +1,4 @@
-package org.ComoSeDice;
+package org.game;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -9,11 +9,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import org.ComoSeDice.Common.CommonPanels;
-import org.ComoSeDice.Common.ComoSeDiceConstants;
-import org.ComoSeDice.Common.ComoSeDiceFrame;
-import org.ComoSeDice.Common.RoundedPanel;
-import org.ComoSeDice.Handlers.Player;
+import org.game.Common.CommonPanels;
+import org.game.Common.ComoSeDiceConstants;
+import org.game.Common.ComoSeDiceFrame;
+import org.game.Common.RoundedPanel;
+import org.game.Handlers.Player;
 
 /**
  * GUI for the Game Mode screen for the Como Se Dice game. The player will see AT THE MOMENT one

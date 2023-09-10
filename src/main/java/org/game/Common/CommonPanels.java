@@ -1,4 +1,4 @@
-package org.ComoSeDice.Common;
+package org.game.Common;
 
 import java.util.Objects;
 import javax.swing.ImageIcon;

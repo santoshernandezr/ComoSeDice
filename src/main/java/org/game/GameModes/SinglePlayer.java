@@ -1,8 +1,8 @@
-package org.ComoSeDice.GameModes;
+package org.game.GameModes;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.ComoSeDice.Common.ComoSeDiceEnum;
+import org.game.Common.ComoSeDiceEnum;
 
 /**
  * This class is to set the rules for single player mode. This contains the amount of correct words

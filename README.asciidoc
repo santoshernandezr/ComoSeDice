@@ -1,7 +1,11 @@
-== Como se dice jueguito
+= Como se dice jueguito
+:toc:
+:sectnums:
 
-=== How to play?
+== How to run the game?
 
-You will want to run `ComoSeDiceGUI` which will bring up a GUI in which you will be asked "Como se dice <word>?". "Se dice" button is the "submit" button and the "new word" button will generate a new word if you cannot get the word.
+You will want to clone the repo into your local computer or wherever you have all your GitHub projects.
 
-More work to be done. TBD.
+=== Intellij
+
+If you are on *IntelliJ* you can just run the `MenuGUI` class. If you want to run it through the terminal, you first have to make sure you have `maven` installed. If you do not have maven installed you can download it on windows https://maven.apache.org/download.cgi[here]. If you are on a macbook and have brew installed, you can simply run `brew install maven`. with the following command you can go to the root directory of the project, run `mvn clean install` and then run `mvn spring-boot:run`.

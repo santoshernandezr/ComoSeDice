@@ -1,9 +1,9 @@
 = GUI Layouts
 :toc:
 
-== Menu Layout
-
 This document is to see the layouts and easier to maintain layouts of each GUI.
+
+== Menu Layout
 
 image::/images/MenuGuiLayout.png[]
 
