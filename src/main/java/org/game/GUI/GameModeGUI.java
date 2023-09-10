@@ -1,4 +1,4 @@
-package org.game;
+package org.game.GUI;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
