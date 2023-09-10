@@ -1,4 +1,4 @@
-package org.game.Handlers;
+package org.game.Handlers.ActionListeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,20 +9,22 @@ import org.apache.commons.lang3.StringUtils;
 import org.game.Common.ComoSeDiceConstants;
 import org.game.Common.ComoSeDiceEnum;
 import org.game.GameModes.SinglePlayer;
+import org.game.Handlers.Player;
 import org.springframework.stereotype.Component;
 
 /**
- * This class is to handle all the buttons (Action Listeners) that will be used in all the GUIs
- * where we can.
+ * This class is to handle all the buttons (Action Listeners) that will be used in the {@link
+ * org.game.GUI.SinglePlayerGUI}.
  */
 @Component
-public class ActionListenerHandler implements ActionListener {
+public class SinglePlayerActionListenerHandler implements ActionListener {
 
   /**
    * This action listener is for the "Submit" button. This button will call the method {@link
-   * ActionListenerHandler#checkWord(JButton, JButton, JButton, JLabel, JLabel, JLabel, JLabel,
-   * JLabel, JTextField, Player)} to check the guess of the user to see if it is the correct spanish
-   * word and then determine how the GUI will be updated according to the scenario/case of the game.
+   * SinglePlayerActionListenerHandler#checkWord(JButton, JButton, JButton, JLabel, JLabel, JLabel,
+   * JLabel, JLabel, JTextField, Player)} to check the guess of the user to see if it is the correct
+   * spanish word and then determine how the GUI will be updated according to the scenario/case of
+   * the game.
    *
    * @param submitButton JButton that stores the "submit" button.
    * @param newWordButton JButton that stores the "new word" button.
@@ -69,8 +71,8 @@ public class ActionListenerHandler implements ActionListener {
    * player, and then check if the amount of retries the player has. If the player has 0 retries, it
    * will hide the "New word" button, so they can no longer generate a new word while playing. If
    * they still have retries, it will generate a new word by calling {@link
-   * ActionListenerHandler#getNewWord(JLabel, JLabel, JLabel, JLabel, JTextField)} and update the
-   * GUI accordingly.
+   * SinglePlayerActionListenerHandler#getNewWord(JLabel, JLabel, JLabel, JLabel, JTextField)} and
+   * update the GUI accordingly.
    *
    * @param newWordButton JButton that stores the "new word" button.
    * @param comoSeDiceLabel JLabel that stores the "Como se dice" message.
@@ -111,11 +113,12 @@ public class ActionListenerHandler implements ActionListener {
 
   /**
    * This action listener is for the "Play again" button. This button will get a new word by calling
-   * {@link ActionListenerHandler#getNewWord(JLabel, JLabel, JLabel, JLabel, JTextField)}, reset the
-   * players score and lives back to 0 and 3 respectively by calling {@link Player#reset()}. This
-   * will also empty out the {@link SinglePlayer#wordsAlreadyUsed} list which contains all the words
-   * used during the single player session. It will also update the GUI accordingly, meaning that it
-   * will hide the "Play again" button and show the "Submit" and "New word" button.
+   * {@link SinglePlayerActionListenerHandler#getNewWord(JLabel, JLabel, JLabel, JLabel,
+   * JTextField)}, reset the players score and lives back to 0 and 3 respectively by calling {@link
+   * Player#reset()}. This will also empty out the {@link SinglePlayer#wordsAlreadyUsed} list which
+   * contains all the words used during the single player session. It will also update the GUI
+   * accordingly, meaning that it will hide the "Play again" button and show the "Submit" and "New
+   * word" button.
    *
    * @param submitButton JButton that stores the "submit" button.
    * @param newWordButton JButton that stores the "new word" button.
@@ -184,6 +187,7 @@ public class ActionListenerHandler implements ActionListener {
     */
     comoSeDiceLabel.setText(
         String.format(ComoSeDiceConstants.COMO_SE_DICE_MESSAGE, SinglePlayer.wordToGuess));
+    comoSeDiceLabel.setVisible(true);
 
     // Sets the guess text field to an empty string so the user can guess again.
     guess.setText("");
@@ -241,13 +245,13 @@ public class ActionListenerHandler implements ActionListener {
     incorrectLabel.setVisible(false);
     ranOutOfLivesLabel.setVisible(false);
 
+    boolean wordIsCorrect = checkNormalOrHardMode(SinglePlayer.hardMode, guess.getText());
+
     /*
     If the players guess was correct we give a point to the player and checks whether they have
     reached the winning score.
     */
-    if (guess
-        .getText()
-        .equalsIgnoreCase(StringUtils.stripAccents(SinglePlayer.wordToGuess.getSpanish()))) {
+    if (wordIsCorrect) {
 
       // Give the player a point.
       player.addPoint();
@@ -264,6 +268,7 @@ public class ActionListenerHandler implements ActionListener {
       to update GUI accordingly.
        */
       if (player.score == SinglePlayer.winnerScore) {
+        comoSeDiceLabel.setVisible(false);
         winnerLabel.setVisible(true);
         setButtonsWhenPlayerWinsOrRunsOutOfLives(submitButton, newWordButton, playAgainButton);
       }
@@ -317,6 +322,21 @@ public class ActionListenerHandler implements ActionListener {
             player.score,
             player.lives,
             player.retries));
+  }
+
+  /**
+   * Checking whether we are playing Normal or Hard mode. If we are playing Normal mode, we ignore
+   * the accent marks. If we are playing Hard mode we validate the word with the accent marks.
+   *
+   * @param hardMode boolean indicating whether hard mode is true or false.
+   * @param word word that we are validating.
+   * @return boolean whether the word was correct depending on the validation.
+   */
+  public boolean checkNormalOrHardMode(Boolean hardMode, String word) {
+    if (hardMode) {
+      return word.equalsIgnoreCase(SinglePlayer.wordToGuess.getSpanish());
+    }
+    return word.equalsIgnoreCase(StringUtils.stripAccents(SinglePlayer.wordToGuess.getSpanish()));
   }
 
   @Override

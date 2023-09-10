@@ -10,12 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.game.Common.CommonPanels;
 import org.game.Common.ComoSeDiceConstants;
 import org.game.Common.ComoSeDiceEnum;
 import org.game.Common.ComoSeDiceFrame;
+import org.game.Common.Panels.CommonPanels;
 import org.game.GameModes.SinglePlayer;
-import org.game.Handlers.ActionListenerHandler;
+import org.game.Handlers.ActionListeners.SinglePlayerActionListenerHandler;
 import org.game.Handlers.Player;
 
 /**
@@ -24,11 +24,21 @@ import org.game.Handlers.Player;
  */
 public class SinglePlayerGUI extends ComoSeDiceFrame implements ActionListener {
 
-  ActionListenerHandler actionListenerHandler = new ActionListenerHandler();
+  SinglePlayerActionListenerHandler singlePlayerActionListenerHandler =
+      new SinglePlayerActionListenerHandler();
 
-  public SinglePlayerGUI(GameModeGUI gameModeGUI, Player player) {
+  /**
+   * Constructor for {@link SinglePlayerGUI}. This GUI will be used for the Normal and Hard mode.
+   * That is we have the title parameter, so we can distinguish and set the title to the correct
+   * game mode that is being played.
+   *
+   * @param gameModeGUI The game mode gui so we can go back to it if the player decides to.
+   * @param player The player instance that comes in from the gameModeGUI.
+   * @param title game mode that is being played.
+   */
+  public SinglePlayerGUI(GameModeGUI gameModeGUI, Player player, String title) {
 
-    super("Normal Mode!");
+    super(title);
 
     SinglePlayer.setWordToGuess();
 
@@ -37,7 +47,7 @@ public class SinglePlayerGUI extends ComoSeDiceFrame implements ActionListener {
     BACK_BUTTON.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     BACK_BUTTON.setBounds(10, 10, 30, 20);
 
-    BACK_BUTTON.addActionListener(backButtonActionListener(gameModeGUI, this));
+    BACK_BUTTON.addActionListener(backButtonActionListener(gameModeGUI, this, player));
 
     /*
      Creating the Picture Panel which will contain the logo.png that's in the resources' directory.
@@ -107,7 +117,7 @@ public class SinglePlayerGUI extends ComoSeDiceFrame implements ActionListener {
 
     // Adding action listeners
     SUBMIT.addActionListener(
-        actionListenerHandler.submitButton(
+        singlePlayerActionListenerHandler.submitButton(
             SUBMIT,
             NEW_WORD,
             PLAY_AGAIN,
@@ -120,7 +130,7 @@ public class SinglePlayerGUI extends ComoSeDiceFrame implements ActionListener {
             player));
 
     NEW_WORD.addActionListener(
-        actionListenerHandler.newWordButton(
+        singlePlayerActionListenerHandler.newWordButton(
             NEW_WORD,
             COMO_SE_DICE_LABEL,
             WORD_IS_INCORRECT_LABEL,
@@ -131,7 +141,7 @@ public class SinglePlayerGUI extends ComoSeDiceFrame implements ActionListener {
             player));
 
     PLAY_AGAIN.addActionListener(
-        actionListenerHandler.playAgainButton(
+        singlePlayerActionListenerHandler.playAgainButton(
             SUBMIT,
             NEW_WORD,
             PLAY_AGAIN,
@@ -149,7 +159,7 @@ public class SinglePlayerGUI extends ComoSeDiceFrame implements ActionListener {
           public void keyPressed(KeyEvent e) {
             // Only call the check word with the enter button call when the player has lives.
             if (e.getKeyCode() == 10 && player.lives > 0) {
-              actionListenerHandler.checkWord(
+              singlePlayerActionListenerHandler.checkWord(
                   SUBMIT,
                   NEW_WORD,
                   PLAY_AGAIN,
@@ -179,12 +189,22 @@ public class SinglePlayerGUI extends ComoSeDiceFrame implements ActionListener {
    *
    * @param gameModeGUI {@link GameModeGUI} instance that came in.
    * @param singlePlayerGUI {@link SinglePlayerGUI} instance that is being used.
+   * @param player {@link Player} instance that will be used throughout the game.
    * @return ActionListener that will be used for the back button.
    */
   public ActionListener backButtonActionListener(
-      GameModeGUI gameModeGUI, SinglePlayerGUI singlePlayerGUI) {
+      GameModeGUI gameModeGUI, SinglePlayerGUI singlePlayerGUI, Player player) {
     ActionListener backButton =
         e -> {
+          player.reset();
+          /*
+           If we're in hard mode, i.e. hardMode is true, if we go back to the Game Mode GUI, we
+           have to reset the hard mode to false since there is a possibility that the player goes
+           back to the Game Mode GUI and decides to play Normal Mode.
+          */
+          if (SinglePlayer.hardMode) {
+            SinglePlayer.hardMode = false;
+          }
           gameModeGUI.setVisible(true);
           /*
            Disposing the single player gui since we are starting a new instance everytime we start a

@@ -20,6 +20,9 @@ public class SinglePlayer {
   // List that stores the words that have already been guessed.
   public static List<ComoSeDiceEnum> wordsAlreadyUsed = new ArrayList<>();
 
+  // Boolean indicating whether we are playing hard mode.
+  public static boolean hardMode = false;
+
   /**
    * Will get a random word from {@link ComoSeDiceEnum} and checks to see that it has not already
    * been used. If it has been used then we call the function again to regenerate a word, if it

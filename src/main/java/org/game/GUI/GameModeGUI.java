@@ -9,18 +9,27 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import org.game.Common.CommonPanels;
 import org.game.Common.ComoSeDiceConstants;
 import org.game.Common.ComoSeDiceFrame;
-import org.game.Common.RoundedPanel;
+import org.game.Common.Panels.CommonPanels;
+import org.game.Common.Panels.RoundedPanel;
+import org.game.Handlers.ActionListeners.GameModeActionListenerHandler;
 import org.game.Handlers.Player;
 
 /**
- * GUI for the Game Mode screen for the Como Se Dice game. The player will see AT THE MOMENT one
- * game mode, Normal Mode, and it will have a description and how to play.
+ * GUI for the Game Mode screen for the Como Se Dice game. The player will see Normal Mode, Hard
+ * Mode, and it will have a description and how to play each mode.
  */
 public class GameModeGUI extends ComoSeDiceFrame implements ActionListener {
 
+  GameModeActionListenerHandler gameModeActionListenerHandler = new GameModeActionListenerHandler();
+
+  /**
+   * Constructor for the Game Mode GUI. We have Player as a parameter that will be brought in from
+   * the {@link MenuGUI} and it will be instantiated with the username the user entered.
+   *
+   * @param player instance of Player.
+   */
   public GameModeGUI(Player player) {
     super("Game Modes!");
 
@@ -33,64 +42,36 @@ public class GameModeGUI extends ComoSeDiceFrame implements ActionListener {
     add(PICTURE_PANEL);
 
     /*
-    Creating the Normal Mode Panel which will contain a panel for the Normal Game. It will contain
+    Creating the Normal Mode Panel which will contain a panel for the Normal Game mode. It will contain
     the description of Normal Mode.
      */
-    JPanel NORMAL_MODE_PANEL = new RoundedPanel(20, Color.CYAN);
-    NORMAL_MODE_PANEL.setBounds(5, 115, 390, 95);
-    NORMAL_MODE_PANEL.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 5));
-
-    JLabel NORMAL_MODE_LABEL = new JLabel("Normal Mode");
-    NORMAL_MODE_LABEL.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
-
-    /*
-     Text area was the best bet for the Normal Games Rules string. We can set the setEditable
-     to false in order for it to look like a JLabel and all text wrap.
-    */
-    JTextArea NORMAL_GAME_RULES_TEXT_AREA = new JTextArea(ComoSeDiceConstants.NORMAL_GAME_RULES);
-    NORMAL_GAME_RULES_TEXT_AREA.setWrapStyleWord(true);
-    NORMAL_GAME_RULES_TEXT_AREA.setBackground(Color.CYAN);
-    NORMAL_GAME_RULES_TEXT_AREA.setEditable(false);
+    JPanel NORMAL_MODE_PANEL =
+        setUpModePanel(5, 115, "Normal Mode", ComoSeDiceConstants.NORMAL_GAME_RULES, Color.CYAN);
 
     JButton NORMAL_MODE_BUTTON = playButton();
-    NORMAL_MODE_BUTTON.addActionListener(normalModeButtonActionListener(this, player));
+    NORMAL_MODE_BUTTON.addActionListener(
+        gameModeActionListenerHandler.normalModeButtonActionListener(this, player));
 
-    /*
-     Adding all elements, Normal Mode Label, Text Area which contains the rules, and the play
-     button.
-    */
-    NORMAL_MODE_PANEL.add(NORMAL_MODE_LABEL);
-    NORMAL_MODE_PANEL.add(NORMAL_GAME_RULES_TEXT_AREA);
     NORMAL_MODE_PANEL.add(NORMAL_MODE_BUTTON);
 
+    /*
+     Creating the Hard Mode Panel which will contain a panel for the Hard Mode. It will contain the
+     description of Hard Mode.
+    */
+    JPanel HARD_MODE_PANEL =
+        setUpModePanel(5, 215, "Hard Mode", ComoSeDiceConstants.HARD_MODE_GAME_RULES, Color.RED);
+
+    JButton HARD_MODE_BUTTON = playButton();
+    HARD_MODE_BUTTON.addActionListener(
+        gameModeActionListenerHandler.hardModeButtonActionListener(this, player));
+
+    HARD_MODE_PANEL.add(HARD_MODE_BUTTON);
+
+    // Adding Panels to the GameModeGUI JPanel.
     add(NORMAL_MODE_PANEL);
+    add(HARD_MODE_PANEL);
 
     setVisible(true);
-  }
-
-  //  public static void main(String[] args) {
-  //    Player player = new Player();
-  //    player.setName("Roberto");
-  //    new GameModeGUI(player);
-  //  }
-
-  /**
-   * Action listener that will be used for the Normal Mode. The button will hide the {@link
-   * GameModeGUI} and show the {@link SinglePlayerGUI}.
-   *
-   * @param gameModeGUI game mode gui.
-   * @param player the player object.
-   * @return ActionListener that the Play button will use for Normal Mode.
-   */
-  public ActionListener normalModeButtonActionListener(GameModeGUI gameModeGUI, Player player) {
-    ActionListener normalModeButton =
-        e -> {
-          SinglePlayerGUI singlePlayerGUI = new SinglePlayerGUI(gameModeGUI, player);
-          singlePlayerGUI.setVisible(true);
-          gameModeGUI.setVisible(false);
-        };
-
-    return normalModeButton;
   }
 
   /**
@@ -103,6 +84,39 @@ public class GameModeGUI extends ComoSeDiceFrame implements ActionListener {
     PLAY_BUTTON.setFont(new Font(Font.DIALOG, Font.PLAIN, 15));
 
     return PLAY_BUTTON;
+  }
+
+  /**
+   * Will set up a similar panel for each game mode.
+   *
+   * @param x x-coordinate of the JPanel.
+   * @param y y-coordinate of the JPanel.
+   * @param title Title of game mode.
+   * @param rules Rules of the game mode.
+   * @param color Color of the JPanel.
+   * @return JPanel for the specified game mode.
+   */
+  public JPanel setUpModePanel(int x, int y, String title, String rules, Color color) {
+    JPanel PANEL = new RoundedPanel(20, color);
+    PANEL.setBounds(x, y, 390, 95);
+    PANEL.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 5));
+
+    JLabel MODE_LABEL = new JLabel(title);
+    MODE_LABEL.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
+
+    /*
+     Text area was the best bet for the Normal Games Rules string. We can set the setEditable
+     to false in order for it to look like a JLabel and all text wrap.
+    */
+    JTextArea GAME_RULES_TEXT_AREA = new JTextArea(rules);
+    GAME_RULES_TEXT_AREA.setWrapStyleWord(true);
+    GAME_RULES_TEXT_AREA.setBackground(color);
+    GAME_RULES_TEXT_AREA.setEditable(false);
+
+    PANEL.add(MODE_LABEL);
+    PANEL.add(GAME_RULES_TEXT_AREA);
+
+    return PANEL;
   }
 
   @Override

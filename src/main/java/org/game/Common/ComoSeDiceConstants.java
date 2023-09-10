@@ -25,4 +25,9 @@ public class ComoSeDiceConstants {
       """
      You will be given 3 lives, 3 opportunities to generate a new
      word (retries), and you have to get 5 points to win :).""";
+
+  public static String HARD_MODE_GAME_RULES =
+      """
+     Same rules as in Normal Mode, but accent marks are
+     REQUIRED in this mode :).""";
 }

@@ -1,4 +1,4 @@
-package org.game.Common;
+package org.game.Common.Panels;
 
 import java.awt.Color;
 import java.awt.Dimension;
