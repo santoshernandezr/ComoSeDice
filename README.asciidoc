@@ -3,9 +3,20 @@
 :sectnums:
 
 == How to run the game?
-
 You will want to clone the repo into your local computer or wherever you have all your GitHub projects.
 
 === Intellij
+If you are on *IntelliJ* you can just run the `MenuGUI` java class.
 
-If you are on *IntelliJ* you can just run the `MenuGUI` class. If you want to run it through the terminal, you first have to make sure you have `maven` installed. If you do not have maven installed you can download it on windows https://maven.apache.org/download.cgi[here]. If you are on a macbook and have brew installed, you can simply run `brew install maven`. with the following command you can go to the root directory of the project, run `mvn clean install` and then run `mvn spring-boot:run`.
+=== Command line and Maven
+If you want to run it through the command, you first have to make sure you have `maven` installed.
+
+==== Windows
+If you do not have maven installed you can download it on windows https://maven.apache.org/download.cgi[here].
+
+==== Mac
+If you are on a macbook and have brew installed, you can simply run `brew install maven`.
+
+To confirm you have maven installed, go to the root directory of the project, and run the following commands `mvn clean install` and then run `mvn spring-boot:run`. This should start up the application and the GUIs.
+
+Have fun :)!!
