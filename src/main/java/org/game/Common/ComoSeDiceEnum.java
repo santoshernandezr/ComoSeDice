@@ -1033,4 +1033,12 @@ public enum ComoSeDiceEnum {
   public String getSpanish() {
     return this.spanish;
   }
+  /**
+   * Gets the English word.
+   *
+   * @return English word
+   */
+  public String getEnglish() {
+    return this.name();
+  }
 }
