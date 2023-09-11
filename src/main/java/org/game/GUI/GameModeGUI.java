@@ -17,8 +17,8 @@ import org.game.Handlers.ActionListeners.GameModeActionListenerHandler;
 import org.game.Handlers.Player;
 
 /**
- * GUI for the Game Mode screen for the Como Se Dice game. The player will see Normal Mode, Hard
- * Mode, and it will have a description and how to play each mode.
+ * GUI for the Game Mode screen for the Como Se Dice game. The player will see Normal, Hard and
+ * timed Mode, and they will each have a description of how to play each mode.
  */
 public class GameModeGUI extends ComoSeDiceFrame implements ActionListener {
 
@@ -31,7 +31,7 @@ public class GameModeGUI extends ComoSeDiceFrame implements ActionListener {
    * @param player instance of Player.
    */
   public GameModeGUI(Player player) {
-    super("Game Modes!");
+    super("Game Modes!", 400, 450);
 
     /*
      Creating the Picture Panel which will contain the logo.png that's in the resources' directory.
@@ -67,9 +67,23 @@ public class GameModeGUI extends ComoSeDiceFrame implements ActionListener {
 
     HARD_MODE_PANEL.add(HARD_MODE_BUTTON);
 
+    /*
+    Creating the Timed Mode Panel which will contain a panel for the Timed Mode Game Mode. It will
+    contain the description of Timed Mode.
+    */
+    JPanel TIMED_MODE_PANEL =
+        setUpModePanel(5, 315, "Timed Mode", ComoSeDiceConstants.TIMED_MODE_RULES, Color.MAGENTA);
+
+    JButton TIMED_MODE_BUTTON = playButton();
+    TIMED_MODE_BUTTON.addActionListener(
+        gameModeActionListenerHandler.timedModeButtonActionListener(this, player));
+
+    TIMED_MODE_PANEL.add(TIMED_MODE_BUTTON);
+
     // Adding Panels to the GameModeGUI JPanel.
     add(NORMAL_MODE_PANEL);
     add(HARD_MODE_PANEL);
+    add(TIMED_MODE_PANEL);
 
     setVisible(true);
   }

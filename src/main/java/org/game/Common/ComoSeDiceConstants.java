@@ -31,4 +31,9 @@ public class ComoSeDiceConstants {
       """
      Same rules as in Normal Mode, but accent marks are
      REQUIRED in this mode :).""";
+
+  public static String TIMED_MODE_RULES =
+      """
+     You will have 60 seconds to get as many points as possible.
+     Every word you get right is a point.""";
 }

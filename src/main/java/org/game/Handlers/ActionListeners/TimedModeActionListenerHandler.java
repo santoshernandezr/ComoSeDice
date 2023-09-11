@@ -6,12 +6,13 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import org.apache.commons.lang3.StringUtils;
 import org.game.Common.ComoSeDiceConstants;
+import org.game.GUI.TimedModeGUI;
 import org.game.GameModes.SinglePlayer;
 import org.game.Handlers.Player;
 
 /**
  * This class is to handle all the buttons (Action Listeners) that will be used in the {@link
- * org.game.GUI.TimedMode}.
+ * TimedModeGUI}.
  */
 public class TimedModeActionListenerHandler implements ActionListener {
 
@@ -89,8 +90,7 @@ public class TimedModeActionListenerHandler implements ActionListener {
    */
   public void updateScoreLabel(JLabel scoreLabel, Player player) {
     scoreLabel.setText(
-        String.format(
-            ComoSeDiceConstants.TIMED_MODE_SCORE, player.name, String.valueOf(player.score)));
+        String.format(ComoSeDiceConstants.TIMED_MODE_SCORE, player.name, player.score));
   }
 
   /**

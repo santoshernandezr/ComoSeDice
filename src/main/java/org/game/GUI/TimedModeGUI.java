@@ -24,7 +24,7 @@ import org.game.Handlers.Player;
  * earn a point for every word they get correct. Everytime they enter a guess, a new word will be
  * generated regardless if they got it right or wrong.
  */
-public class TimedMode extends ComoSeDiceFrame implements ActionListener {
+public class TimedModeGUI extends ComoSeDiceFrame implements ActionListener {
 
   JLabel COUNTER_LABEL = new JLabel();
   JLabel COMO_SE_DICE_LABEL = new JLabel();
@@ -45,14 +45,14 @@ public class TimedMode extends ComoSeDiceFrame implements ActionListener {
       new TimedModeActionListenerHandler();
 
   /**
-   * Constructor for {@link TimedMode}. This GUI will be used for the Timed mode.
+   * Constructor for {@link TimedModeGUI}. This GUI will be used for the Timed mode.
    *
    * @param gameModeGUI The game mode gui so we can go back to it if the player decides to.
    * @param player The player instance that comes in from the gameModeGUI.
    */
-  public TimedMode(GameModeGUI gameModeGUI, Player player) {
+  public TimedModeGUI(GameModeGUI gameModeGUI, Player player) {
 
-    super("Timed Mode");
+    super("Timed Mode", 400, 400);
 
     SinglePlayer.setWordToGuess();
 
@@ -178,12 +178,12 @@ public class TimedMode extends ComoSeDiceFrame implements ActionListener {
    * Action Listener will allow to go back to the {@link GameModeGUI}.
    *
    * @param gameModeGUI {@link GameModeGUI} instance that came in.
-   * @param timedMode {@link TimedMode} instance that is being used.
+   * @param timedMode {@link TimedModeGUI} instance that is being used.
    * @param player {@link Player} instance that will be used throughout the game.
    * @return ActionListener that will be used for the back button.
    */
   public ActionListener backButtonActionListener(
-      GameModeGUI gameModeGUI, TimedMode timedMode, Player player) {
+      GameModeGUI gameModeGUI, TimedModeGUI timedMode, Player player) {
     ActionListener backButton =
         e -> {
           player.reset();
@@ -222,12 +222,6 @@ public class TimedMode extends ComoSeDiceFrame implements ActionListener {
                 COUNTER_LABEL.setVisible(false);
               }
             });
-  }
-
-  public static void main(String[] args) {
-    Player player = new Player();
-    player.setName("Roberto");
-    new TimedMode(new GameModeGUI(player), player);
   }
 
   @Override

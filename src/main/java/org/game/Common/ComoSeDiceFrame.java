@@ -12,11 +12,20 @@ import javax.swing.JFrame;
  */
 public class ComoSeDiceFrame extends JFrame {
 
-  public ComoSeDiceFrame(String title) {
+  /**
+   * Constructor for the template frame that all GUIs will use. We've decided to have title, width,
+   * and height as a parameter to make it easier to adjust size depending on the content of each
+   * Frame.
+   *
+   * @param title title of the GUI.
+   * @param width width of the GUI.
+   * @param height height of the GUI.
+   */
+  public ComoSeDiceFrame(String title, int width, int height) {
     super(title);
     setLayout(null);
 
-    setGUIinMiddleOfScreen(this);
+    setGUIinMiddleOfScreen(this, width, height);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
   }
 
@@ -25,10 +34,10 @@ public class ComoSeDiceFrame extends JFrame {
    *
    * @param frame the frame we wish to put in the middle of the screen.
    */
-  public static void setGUIinMiddleOfScreen(JFrame frame) {
+  public static void setGUIinMiddleOfScreen(JFrame frame, int width, int height) {
     Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-    int x = ((int) size.getWidth() / 2) - 200;
-    int y = ((int) size.getHeight()) / 2 - 200;
-    frame.setBounds(x, y, 400, 400);
+    int x = ((int) size.getWidth() / 2) - (width / 2);
+    int y = ((int) size.getHeight()) / 2 - (height / 2);
+    frame.setBounds(x, y, width, height);
   }
 }

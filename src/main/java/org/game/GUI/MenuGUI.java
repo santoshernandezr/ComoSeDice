@@ -34,7 +34,7 @@ public class MenuGUI extends ComoSeDiceFrame implements ActionListener {
   Player playerOne = new Player();
 
   public MenuGUI() {
-    super("Como Se Dice!");
+    super("Como Se Dice!", 400, 400);
 
     // Creating the welcome panel. This Welcome panel will contain the Let's play Label.
     JPanel WELCOME_PANEL = new JPanel();

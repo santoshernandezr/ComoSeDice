@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.game.GUI.GameModeGUI;
 import org.game.GUI.SinglePlayerGUI;
+import org.game.GUI.TimedModeGUI;
 import org.game.GameModes.SinglePlayer;
 import org.game.Handlers.Player;
 import org.springframework.stereotype.Component;
@@ -53,6 +54,25 @@ public class GameModeActionListenerHandler implements ActionListener {
           gameModeGUI.setVisible(false);
         };
     return hardModeButton;
+  }
+
+  /**
+   * Action listener that will be used for the Timed Mode. The button will hide the {@link
+   * GameModeGUI} and show the {@link TimedModeGUI}.
+   *
+   * @param gameModeGUI game mode gui.
+   * @param player the player object.
+   * @return ActionListener that the Play button will use for Timed Mode.
+   */
+  public ActionListener timedModeButtonActionListener(GameModeGUI gameModeGUI, Player player) {
+    ActionListener timedModeButton =
+        e -> {
+          TimedModeGUI timedModeGUI = new TimedModeGUI(gameModeGUI, player);
+          timedModeGUI.setVisible(true);
+          gameModeGUI.setVisible(false);
+        };
+
+    return timedModeButton;
   }
 
   @Override

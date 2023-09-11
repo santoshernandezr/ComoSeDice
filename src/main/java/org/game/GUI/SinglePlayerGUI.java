@@ -38,7 +38,7 @@ public class SinglePlayerGUI extends ComoSeDiceFrame implements ActionListener {
    */
   public SinglePlayerGUI(GameModeGUI gameModeGUI, Player player, String title) {
 
-    super(title);
+    super(title, 400, 400);
 
     SinglePlayer.setWordToGuess();
 
