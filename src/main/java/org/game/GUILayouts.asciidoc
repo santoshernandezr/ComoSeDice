@@ -7,6 +7,16 @@ This document is to see the layouts and easier to maintain layouts of each GUI.
 
 image::/images/MenuGuiLayout.png[]
 
+This layout is for the Menu GUI, where the user is greeted with basic rules and asked to enter a username.
+
+== Game Mode Layout
+
+image::/images/GameModeGUILayout.png[]
+
+This layout is used for the Game Mode GUI, this is where the list of all the games is located.
+
 == Single Player Layout
 
 image::/images/SinglePlayerGuiLayout.png[]
+
+This layout is used for all the actual Mode GUIs. This is the Layout for the current game modes implemented, Normal, Hard, and Timed mode.
