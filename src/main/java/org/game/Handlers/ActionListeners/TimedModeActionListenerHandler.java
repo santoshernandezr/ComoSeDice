@@ -31,10 +31,7 @@ public class TimedModeActionListenerHandler implements ActionListener {
   public ActionListener submitButton(
       JLabel comoSeDiceLabel, JLabel scoreLabel, JTextField guess, Player player) {
 
-    ActionListener submit =
-        e -> {
-          checkWord(comoSeDiceLabel, scoreLabel, guess, player);
-        };
+    ActionListener submit = e -> checkWord(comoSeDiceLabel, scoreLabel, guess, player);
     return submit;
   }
 
@@ -71,11 +68,18 @@ public class TimedModeActionListenerHandler implements ActionListener {
    *
    * @param comoSeDiceLabel JLabel that stores the "Como se dice" message.
    * @param scoreLabel JLabel that stores the "Score" of the player.
+   * @param newHighScoreLabel JLabel that stores the "New high score" message.
    * @param guess JLabel that has the users guess.
    * @param player Instance of the current player.
    */
   public void startOver(
-      JLabel comoSeDiceLabel, JLabel scoreLabel, JTextField guess, Player player) {
+      JLabel comoSeDiceLabel,
+      JLabel scoreLabel,
+      JLabel newHighScoreLabel,
+      JTextField guess,
+      Player player) {
+    // Hiding the high score label
+    newHighScoreLabel.setVisible(false);
     SinglePlayer.resetWords();
     player.reset();
     getNewWord(comoSeDiceLabel, guess);
@@ -90,7 +94,11 @@ public class TimedModeActionListenerHandler implements ActionListener {
    */
   public void updateScoreLabel(JLabel scoreLabel, Player player) {
     scoreLabel.setText(
-        String.format(ComoSeDiceConstants.TIMED_MODE_SCORE, player.name, player.score));
+        String.format(
+            ComoSeDiceConstants.TIMED_MODE_SCORE,
+            player.name,
+            player.score,
+            player.bestTimedScore));
   }
 
   /**
@@ -113,6 +121,28 @@ public class TimedModeActionListenerHandler implements ActionListener {
 
     // Sets the guess text field to an empty string so the user can guess again.
     guess.setText("");
+  }
+
+  /**
+   * Will validate the score of the player. If the players score is higher than the previous best
+   * the new high score will be set to that score. It will also congratulate the user for getting a
+   * new high score.
+   *
+   * @param player Instance of the current player.
+   * @param scoreLabel JLabel that stores the "Score" of the player.
+   * @param newHighScoreLabel JLabel that stores the "New high score" message.
+   */
+  public void validateScore(Player player, JLabel scoreLabel, JLabel newHighScoreLabel) {
+    if (player.score > player.bestTimedScore) {
+      player.setBestTimedScore(player.score);
+
+      // Updating the new high score label that will be shown ONLY if they get a new high score
+      newHighScoreLabel.setText(
+          String.format(ComoSeDiceConstants.NEW_HIGH_SCORE_TIMED_MODE, player.bestTimedScore));
+      newHighScoreLabel.setVisible(true);
+
+      updateScoreLabel(scoreLabel, player);
+    }
   }
 
   @Override

@@ -25,20 +25,15 @@ import org.game.Handlers.Player;
  * generated regardless if they got it right or wrong.
  */
 public class TimedModeGUI extends ComoSeDiceFrame implements ActionListener {
-
   JLabel COUNTER_LABEL = new JLabel();
   JLabel COMO_SE_DICE_LABEL = new JLabel();
-
+  JLabel NAME_LABEL = new JLabel();
+  JLabel NEW_HIGH_SCORE = new JLabel();
   JLabel SCORE_LABEL = new JLabel();
-
   JButton SUBMIT = new JButton();
-
   JButton START_OVER = new JButton();
-
   JButton PLAY_AGAIN = new JButton();
-
   Timer TIMER;
-
   int second = 61;
 
   TimedModeActionListenerHandler timedModeActionListenerHandler =
@@ -82,14 +77,25 @@ public class TimedModeGUI extends ComoSeDiceFrame implements ActionListener {
     COMO_SE_DICE_LABEL.setText(
         String.format(ComoSeDiceConstants.COMO_SE_DICE_MESSAGE, SinglePlayer.wordToGuess));
 
+    NAME_LABEL.setText(player.name);
+
+    NEW_HIGH_SCORE.setText(
+        String.format(ComoSeDiceConstants.NEW_HIGH_SCORE_TIMED_MODE, player.bestTimedScore));
+    NEW_HIGH_SCORE.setVisible(false);
+
     SCORE_LABEL.setText(
-        String.format(ComoSeDiceConstants.TIMED_MODE_SCORE, player.name, player.score));
+        String.format(
+            ComoSeDiceConstants.TIMED_MODE_SCORE,
+            player.name,
+            player.score,
+            player.bestTimedScore));
     SCORE_LABEL.setVisible(true);
 
     JTextField GUESS = new JTextField(10);
 
     USER_PANEL.add(COUNTER_LABEL);
     USER_PANEL.add(COMO_SE_DICE_LABEL);
+    USER_PANEL.add(NEW_HIGH_SCORE);
     USER_PANEL.add(SCORE_LABEL);
     USER_PANEL.add(GUESS);
 
@@ -128,7 +134,8 @@ public class TimedModeGUI extends ComoSeDiceFrame implements ActionListener {
           second = 60;
           COUNTER_LABEL.setText("" + second);
           player.reset();
-          timedModeActionListenerHandler.startOver(COMO_SE_DICE_LABEL, SCORE_LABEL, GUESS, player);
+          timedModeActionListenerHandler.startOver(
+              COMO_SE_DICE_LABEL, SCORE_LABEL, NEW_HIGH_SCORE, GUESS, player);
         });
 
     /*
@@ -146,7 +153,8 @@ public class TimedModeGUI extends ComoSeDiceFrame implements ActionListener {
           START_OVER.setVisible(true);
           COMO_SE_DICE_LABEL.setVisible(true);
           COUNTER_LABEL.setVisible(true);
-          timedModeActionListenerHandler.startOver(COMO_SE_DICE_LABEL, SCORE_LABEL, GUESS, player);
+          timedModeActionListenerHandler.startOver(
+              COMO_SE_DICE_LABEL, SCORE_LABEL, NEW_HIGH_SCORE, GUESS, player);
         });
 
     // Key Listener for the "enter" button.
@@ -167,7 +175,7 @@ public class TimedModeGUI extends ComoSeDiceFrame implements ActionListener {
     add(USER_PANEL);
     add(BUTTON_PANEL);
 
-    countDownTimer();
+    countDownTimer(player, SCORE_LABEL, NEW_HIGH_SCORE);
     TIMER.start();
 
     setVisible(true);
@@ -198,8 +206,14 @@ public class TimedModeGUI extends ComoSeDiceFrame implements ActionListener {
     return backButton;
   }
 
-  /** Countdown timer that will be used in the Timer Mode. */
-  public void countDownTimer() {
+  /**
+   * Countdown timer that will be used in the Timer Mode.
+   *
+   * @param player Instance of the current player.
+   * @param scoreLabel JLabel that stores the "Score" of the player.
+   * @param newHighScoreLabel JLabel that stores the "New high score" message.
+   */
+  public void countDownTimer(Player player, JLabel scoreLabel, JLabel newHighScoreLabel) {
     TIMER =
         new Timer(
             1000,
@@ -215,6 +229,9 @@ public class TimedModeGUI extends ComoSeDiceFrame implements ActionListener {
                */
               if (second == 0) {
                 TIMER.stop();
+                // We validate the score of the player to see if it's a new high score
+                timedModeActionListenerHandler.validateScore(player, scoreLabel, newHighScoreLabel);
+
                 PLAY_AGAIN.setVisible(true);
                 SUBMIT.setVisible(false);
                 START_OVER.setVisible(false);
